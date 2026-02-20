@@ -1,0 +1,340 @@
+Company ID,MSA Status,Company,Pipefile,AVETTA,Name,Email,City,State,"City, State",Latitude,Longitude,Phone,BIRD REP,Category,Rating 
+1064Qu,Signed Not Exe,Quest EPC,,,Shannon Green,shannon.green@questepc.com,Tulsa,OK,"Tulsa, OK",36.1563122,-95.9927516,,Kearny,Non-Union,0
+1004AM,NDA Signed,AMPP Construction,,,Brent Kinnett,bkinnett@amppconstruction.com,Winchester ,IN,"Winchester, IN",40.1719892,-84.9813549,,Kearny,Union,0
+1008At,Redlines Returned,Atlantic Power Constructors,,,Adam Desrosiers,Adesrosiers@useapc.com,Conover,NC,"Conover, NC",35.7065004,-81.2184383,,Kyle,Union,0
+1009AW,Redlines Returned,AWP Saftey,,,Jeff Rous,jeff.rous@awpsafety.com,North Canton,OH,"North Canton, OH",40.875891,-81.4023356,,,Non-Union,0
+1050MM,Redlines Returned,MMR Group,,,Rene Frausto,Rene.frausto@mmrgrp.com/mmrprequals@mmrgrp.com,Odessa,TX,"Odessa, TX",31.8457149,-102.367687,,,Non-Union,0
+1058Ph,Redlines Returned,Phillips Power,,,Ryker Bryson,bryker@pandj.com,San Antonio,FL,"San Antonio , FL",28.3361142,-82.2745308,,,Union,0
+1065Ro,Redlines Returned,RowCon LLC,,,Jared Cormier,jared.cormier@row-con.com/(603) 801-7953,knoxville,TN,"Knoxville, TN",35.9603948,-83.9210261,,,Union,0
+1000AC,Executed,ACE Construction & Engineering ,,,Will Watson,wwatson@aceconstructionengineering.com,Eastvale,CA,"EastVale, CA",33.9747067,-117.566541,,,Union,0
+1001Ac,Executed,Aces Powerline Services ,,,Courtne Kilby,ckilby@4aces.us,Calhoun,GA,"Calhoun, GA",34.502587,-84.9510542,,,Union,0
+1002AE,Executed,AES LLC,,,Ricardo Garcia,operations@aeservices.net,Porter,TX,"Porter, TX",30.1024397,-95.2296553,,Trevor,Veg,0
+1003AM,Executed,AMB Power,,,Ricardo Rodriguez,rrodriguez@amb-power.com,Mokena,IL,"Mokena, IL",41.5261437,-87.8892189,,,Union,0
+1006Ar,Executed,ArborWorks,,,Amanda Smith,amanda.smith@arborworksinc.com,Oakhurst,CA,"Oakhurst, CA",37.3311313,-119.6558221,,Scott,Veg,0
+1007AR,Executed,ARC Utilities Construction LLC. ,,,Davis Robinson,Drobinson@arc-utilities.com,Castlewood,VA,"Castlewood, VA",36.8725194,-82.3000411,,,Non-Union,0
+1010Ax,Executed,"Axis Power, LLC",,,Eric Deville,Edeville@axispower.com,Lafayette,LA,"Lafayette, LA",30.2262187,-92.0178202,,Randall,Union,0
+1012Bu,Executed,Burns Electric ,,,Brooks Gibson,brooks@burns-electric.com,Des Moines,IA,"Des Moines, IA",41.5868654,-93.6249494,,,Union,0
+1013C&,Executed,C&G Energy Services,,,Hil Fradenburg,Hil.Fradenburg@C-GElectrical.com,Midland ,TX,"Midland , TX",31.9973662,-102.077948,,,Non-Union,0
+1014Ce,Executed,Ceiba Land management LLC,,,Chuck Powell,Cpowell@kateripowerline.com,Muscle Shoals,AL,"Muscle Shoals, AL",34.7436791,-87.6532615,,,Veg,0
+1016Co,Executed,Colburns tree service inc,,,Justin Coburn,Office@colburnstreeservice.com,Cullman,Al,"Cullman, AL ",34.1748408,-86.8435802,,,Veg,0
+1020Ea,Executed,East Coast Lines,,,Vincent Cardwell,vince@ecoastlines.com,Sevierville ,TN,"Sevierville, TN",35.8672932,-83.5657167,,Chris,Union,0
+1022El,Executed,Elite Powerline Solutions,,,Adam Vogelmeier,Adamv@elitepowerlinesolutions.com,Lapeer,MI,"Lapeer, MI",43.0514161,-83.3188341,,,Union,0
+1023El,Executed,Elite Utility Services LLC,,,Lanedon Gambrel,Lgambrel@eliteutilityservices.net,Barbourville,KY,"Barbourville, KY",36.8664765,-83.8888138,,,Union,0
+1025Fi,Executed,Fixin Electric LLC,,,Chad Davis ,cdavis@fixinelectric.com/276-594-0830,Nickelsville,VA,"Nickelsville, VA",36.7517919,-82.4167366,,,Union,0
+1029Fr,Executed,Freedom Powerlines ,,,Brandon Moore,Bmoore@freedom-lines.com/714-603-8687,Jacksonville,FL,"Jacksonville, FL",30.3321838,-81.655651,,,Union,0
+1030Fr,Executed,Frontline Solutions ,,,Tony Paterno ,info@frontline.llc,Dalton Gargens,ID,"Dalton Gargens, ID",43.644556,-116.298848,,,Union,0
+1031FT,Executed,FTT Power,,,Kristie Tucker,ktucker@fttpowerconsultingllc.com,Chickasha,OK,"Chickasha, OK",35.0512159,-97.9370036,,,Non-Union,0
+1032Gl,Executed,Global Energy Group,,,James Walker ,jwalker@globalenergygroup.org,Sharon,OK,"Sharon, OK",36.2756654,-99.3382051,,,Union,0
+1034Gr,Executed,Gridco Inc ,,,Johnathan Rodgers ,Jrogers@gridcompany.com,Birmingham,Al,"Birmingham, AL",33.5206824,-86.8024326,,,Union,0
+1037In,Executed,Integrity Line Solutions,,,Justin Huggins,Justin.huggins@integritylinesolutions.com,Cincinatti,OH,"Cincinatti, OH",40.100754,-80.619065,,,Union,0
+1041KN,Executed,KNX Utility Services ,,,Charles Harris,Charles.harris@knxus.com,Rodney,MI,"Rodney, MI",43.6736363,-85.3283727,,Kyle,DAT,0
+1042KV,Executed,KV Power ,,,Bobby Cox,Bobby.Cox@powerstandard.com,Rhome,TX,"Rhome, TX",33.0534563,-97.4719662,,,Union,0
+1044Li,Executed,Linewerx,,,Brandon Boyce,brandon.boyce@linewerxinc.com,Hurricane,WV,"Hurricane, WV",38.4325896,-82.0201368,,,Union,0
+1045Li,Executed,Lite Wave llc,,,Nick Braun,nick@litewavellc.com,San Angelo ,TX,"San Angelo , TX ",31.4649685,-100.4405094,,,Union,0
+1047LV,Executed,LVM Power,,,Larry McPeake,jodelle.homminga@lvmpower.com,Henderson,TN,"Henderson, TN",35.4392435,-88.6414411,,,Union,0
+1048MA,Executed,MAC Construction,,,Eddie Mac ,eddie.p@macconstructionusa.com,Tarpon Springs,FL,"Tarpon Springs, FL",28.1470965,-82.756367,,,Veg,0
+1049Mi,Executed,Mid TN Treee Service,,,Gabreyella Cross ,midtntreeservice@gmail.com,Madison,TN,"Madison, TN",36.2561646,-86.7138861,,,Veg,0
+1052Ne,Executed,NexGenEnergy,,,Donna Cruse,dcruse@nexgenenergyllc.com,Forest City,NC,"Forest City, NC",35.3337279,-81.8649245,,,Union,0
+1054Pe,Executed,Peak Energy Solutions,,,Janice Fite ,janicef@peakenergysoln.com,Seminole,TX,"Seminole, TX",32.7167351,-102.6490967,,,Non-Union,0
+1055Pe,Executed,Personal Touch Inc,,,Craig Plowman,cplowman@ptincusa.com,Demopolis,AL,"Demopolis, AL",32.5178284,-87.8368201,,,Veg,0
+1056Pe,Executed,Personal Touch Inc,,,Craig Plowman,dmurray@ptincusa.com,Demopolis,AL,"Demopolis, AL",32.5178284,-87.8368201,,,Veg,0
+1059Pi,Executed,Pinnacle Tree works,,,David Mallonee,davidmallonee@outlook.com/christy.morris1967@gmail.com,Charlotte,TN,"Charlotte, TN",36.1772797,-87.3397319,,,Veg,0
+1060Po,Executed,Powerful Restorations,,,Blake Wilkins ,bwilkins@powerfulrestorations.com,Louisville ,KY,"Louisville, KY",38.2542376,-85.759407,,Kyle,Union,0
+1066Ru,Executed,Russell Tree Experts,,,Joe Russell,jrussell@russelltreeexperts.com,Westerville,OH,"Westerville, OH",40.126139,-82.9295287,,,Veg,0
+1067Sk,Executed,Sky High Power,,,Josh Pierce,jpierce@shpower.net,Dry Ridge ,KY,"Dry Ridge, KY",38.6820123,-84.5899426,,,Union,0
+1071St,Executed,Steady Flow tester ,,,Michael Villa ,Michael@steadyflowtester.com,Midland ,TX,"Midland , TX",31.9973662,-102.077948,,,DAT,0
+1072St,Executed,Strong Power ,,,Frank Cantu,frankstrongpowerllc@yahoo.com,Harlingen,TX,"Harlingen, TX",26.1907543,-97.6960599,,Josh,Non-Union,0
+1073Ta,Executed,Tapline Utility Services ,,,Bryan Tapert ,CTapert@TaplineUtilityServices.com,Pittsburg,PA ,"Pittsburgh, PA",40.4416941,-79.9900861,,,Union,0
+1075Te,Executed,Texas Electric,,,Jesse Martinez,jessemtexaselectric@gmail.com,Midland ,TX,"Midland, TX",31.9973662,-102.077948,,,Non-Union,0
+1076Ti,Executed,Titan Power LLC,,,Adam Miller ,Titanpowerllc@outlook.com,Chattanooga,TN,"Chattanooga, TN",35.0457219,-85.3094883,,,Union,0
+1079Tr,Executed,TruConTra,,,Travis Conner,tconner@trucontra.com,Pecos,TX,"Pecos, TX",31.4254143,-103.4952894,,,Non-Union,0
+1082US,Executed,US Storm Resource ,,,Shawn Akers,sakers.usstormresource@yahoo.com,Winnsboro,LA,"Winnsboro, LA",32.1618782,-91.7226934,,,Non-Union,0
+1083US,Executed,US Storm Resource ,,,Amanda,tlsservicesllc@yahoo.com,Winnsboro,LA,"Winnsboro, LA",32.1618782,-91.7226934,,,Non-Union,0
+1086Va,Executed,Variable Line Solutions LLC ,,,Benji Queen,Bqueen@variablels.com,Hunnington,WV,"Hunnington, WV",38.720281,-80.649428,,Kyle,DAT,0
+1087Ye,Executed,Yellow Creek Tree,,,Ashton Shultz,yellowcreektree@gmail.com,Dickson,TN,"Dickson, TN",36.0766534,-87.3870096,,,Veg,0
+100Fer,Executed,Ferriera South ,Unfinished,Yes,Renae Duckworth,rduckworth@ferreirastormgroup.com,,FL,", FL",,,(903) 821-6680,Randall/Kyle/Chris ,Non-Union,3
+101Fer,Executed,Ferriera West,Unfinished,N/A,Renae Duckworth,rduckworth@ferreirastormgroup.com,Fort Worth,TX,"Fort Worth, TX",32.7555,-97.3308,(903) 821-6680,Kyle,Union,3
+102Fer,,Ferro Electric LLC,Unfinished ,N/A,Awsten Powell ,apowell@ferroelectric.org,,AL,", AL",,,(573) 217-9266,Nathan ,Union,0
+103Fer,,Ferro Electric LLC,Unfinished ,N/A,Awsten Powell ,apowell@ferroelectric.org,,CT,", CT",,,(573) 217-9266,Nathan ,Union,0
+104Fer,,Ferro Electric LLC,Unfinished ,N/A,Awsten Powell ,apowell@ferroelectric.org,,MO,", MO",,,(573) 217-9266,Nathan ,Union,0
+105Flo,Executed,Flory Line ,Completed ,Yes,Justin Flory,justin.flory@floryline.com,Lennen,MI,"Lennen, MI",42.9842,-83.9302,(989) 277-7370,Kyle,Union,3
+106For,Executed,Force,Completed,Yes,Corey Mahan ,cmahan@forceelect.com,Woodward,OK,"Woodward, OK",36.4337,-99.3904,(918) 576-8581,Randall,Non-Union,4
+107For,,Force Electric,Completed ,No,James Johnson ,jjohnson@forcepowerline.com,Grasslake ,MI,"Grasslake , MI",42.2475,-84.1916,(517) 803- 5843,Kyle,Union,0
+108FUS,,FUSE Electric LLC ,Unfinished,Yes,Jeremy Anderson ,fuseelectricmi@gmail.com,Clarklake,MI,"Clarklake, MI",42.1172,-84.3136,(517) 960-8740,Kyle/Randall,Union,0
+109Fus,,Fusion Power,Completed,Yes,Danny Lawson,dlawson@fusionpower-ind.com,Guthrie,OK,"Guthrie, OK",35.8789,-97.4253,(405) 471-4009,Kyle,Non-Union,4
+10A1 ,,A1 Utility ,Completed ,Yes,Troy Lyons,troy@a1utilitycontractor.com,Evart,MI,"Evart, MI",43.9006,-85.2581,(989) 324-8581,Nathan/Kyle,Union,0
+110Gen,Executed,Gentex LLC,Unfinished,N/A,Kacey ,Kacey@gentexlIc.com,Midland ,TX,"Midland , TX",31.9973,-102.0779,(,Josh,HVAC,3
+111GMB,NDA Signed,GMB,Completed ,Yes,Michael Atkins ,madkins@gmbpowerlineservices.net,Charleston,WV,"Charleston, WV",38.3498,-81.6326,(681) 356-3491,Brian,Union,3
+112Gol,Executed,Goldsmith Unit Services,Completed,Yes,Matthew Gurbisz,matt@goldsmithus.com,Odessa,TX,"Odessa, TX",31.8457,-102.3676,(254) 433-3653,Chris,Non-Union,3
+113Goo,Redlines Returned,Good Hope INC,Completed,Yes,Conner House ,conner@g-hope.com,Natchez,MS ,"Natchez, MS ",31.5604,-91.4032,(601) 807-1122,Trevor,Veg,0
+114Goo,Executed,Good O’l Boys ,Unfinished,N/A,Seith Manring,Gobrentals30@gmail.com,Wellston,OH,"Wellston, OH",39.1237,-82.5329,(740) 978-0065,Izabella,Union,4
+115Got,,"Got Utilities, LLC",Unfinished,Yes,Nick Lupi,Nick.lupi@gotutilities.com,Rockville,MD,"Rockville, MD",39.0839,-77.1528,(443)207-0827,Izabella,Non-Union,0
+116GPC,Executed,GPC,Completed ,Yes,Jason Garrett,jgarrett@gpccorp.net,Union City,MO,"Union City, MO",36.8228,-89.0705,(636) 358-6391,Kyle,Union,0
+117G-P,Executed,G-Power,Completed,Yes,Gabriel Rodriguez,gabriel@gpowerelectric.com,Midland ,TX,"Midland , TX",31.9973,-102.0779,(432) 967-6043,Kerney,Non-Union,0
+118Gra,,Grays Power Supply,Completed ,Yes,Micheal Gray ,mgray@grayspowersupply.com,Oakland ,MS,"Oakland , MS",34.0911,-89.8281,(770) 548-9042,Randall,Union,3
+119Gre,Executed,Green Country ,Completed,Yes,Jerrell Smith,jerrellsmith30@yahoo.com,Hennyetta ,OK,"Hennyetta , OK",35.4398,-95.9819,(918) 650-2986,Randall/Josh,Non-Union,4
+11Ace,,Ace Tree Enterprise Inc ,Completed,No,Kimberly Gobinez ,kimberly.gobinez@acetreeent.com ,Newcastle,CA,"Newcastle, CA",38.8743,-121.142,(916) 500-2933,Trevor,Veg,0
+120Gre,,Grey Stone ,Unfinished ,N/A,Stepehn Parenteau,Stephen@greystonegroupco.com,,,", ",,,(508)326 6951,Chris,Union,0
+121Gri,Executed,Grid Power,Completed ,Yes,Chris Stewart,Chris.gridpower@gmail.com,Jonesborough,TN,"Jonesborough, TN",36.2943,-82.4735,(423) 972-2887,Chris/Flash,Union,4.5
+122Gri,,Grid Services,Completed ,Yes,Donny Raughton,donny@gridservicesllc.com,Birmingham,AL,"Birmingham, AL",33.5186,-86.8104,(205) 473-9493,Brian,Union,2
+123Gri,,Grid Services,Unfinished ,N/A,Mr. Robinson,lrobinson@gridservicesllc.com,Birmingham,AL,"Birmingham, AL",33.5186,-86.8104,,Brian,Union,3
+1247,,247 INC,Unfinished,N/A,Mark Wells,mark@247row.com,Cleveland ,OK,"Cleveland , OK",36.3101,-96.4641,(573) 318-0323,Trevor,Veg,0
+124Gri,Executed,Grip Powerline,Completed,No,Jeremy Esparza,Gpc@grippowerline.com,Midland ,TX,"Midland , TX",31.9973,-102.0779,(432) 254-1547,Brian,Non-Union,0
+125Gun,,Gunnison/West Tree,Unfinished,,Matt Cathell ,MCathell@gunnisoncompany.com,Atlanta,GA ,"Atlanta, GA ",33.749,-84.388,(404) 376-7793,Trevor,Veg,0
+126H.R,Executed,H.R. Richardson,Unfinished ,,Cheryl Richardson,Crichardson@HRSUtilities.com,Ogdensburg,NY,"Ogdensburg, NY",44.6942,-75.4863,(315) 778-0345,Randall,Union,4
+127Hal,,Halter Group,Unfinished,Yes,Zack Halter,Zach@thehaltergroup.com,Vincennes,IN,"Vincennes, IN",38.6773,-87.5286,,Trevor,Veg,0
+128Ham,Redlines Returned,Hampton Tedder Electric,Unfinished ,N/A,Myles Tedder,myles.tedder@hamptontedder.com,Herkimer,NY,"Herkimer, NY",43.0256,-74.9857,(562) 221-7795,Kyle,Union,0
+129Has,Executed,Hastings ,Completed ,Yes,Nicole Stevens,nicole.stevens@hastingsutilities.ca,Pickering ,Canada ,"Pickering , Canada ",43.8384,-79.0868,(905) 261-0822,Nathan,Union,0
+12Ace,,Ace Tree Enterprise Inc ,Completed,No,Jayden P Vasquez,Jayden@acetreeent.com ,Newcastle,CA,"Newcastle, CA",38.8743,-121.142,(951)675-6774,Trevor,Veg,0
+130Haw,Executed,Hawkline Contruction,Completed ,Yes,Garry Haralson, kscott@hawklineco.com,Neosho,MO,"Neosho, MO",36.8689,-94.3675,(417) 850-1454,Kyle,Union,3
+131Hob,Executed,Hobbs Electric LLC,Unfinished ,Yes,Caleb Hobbs,Office.hobbselectric@gmail.com,Wilmington,NC,"Wilmington, NC",34.2257,-77.9447,(910) 777-1063,Kerney,Union,0
+132Hol,,Holland Power,Completed ,No,Jim Salmon,jsalmon@hollandpowerservices.com,Maugerville ,Canada ,"Maugerville , Canada ",45.8896,-66.6838,(518) 527-8594,Kyle,Union,0
+133Hoo,,Hoosier,Unfinished,N/A,Chris Brown ,cbrown@hoosieredison.com,Indianapolis,IN,"Indianapolis, IN",39.7684,-86.1581,(765) 438-6432,Randall,Union,0
+134HRT,,HRT Power Services ,Completed,Yes,Mark Huse ,markh@hrtpowerservices.com,Clovis,NM,"Clovis, NM",34.4048,-103.2052,(575) 749-4989,Kyle,Non-Union,3
+135Hyd,,Hydaker-Wheatlake Company,Completed ,Yes,Kyle Johnson,Kyle_Johnson@uscco.com,Reed City ,MI,"Reed City , MI",43.8756,-85.51,(231) 245-6847,Izabella,Union,0
+136I80,Executed,I80,Completed ,Yes,Joe Stewart,joe.swewart@i-80power.com,Madrid,IA,"Madrid, IA",41.8761,-93.823,(515) 971-6926,Randall,Union,3.75
+137J&J,Executed,J&J Tree ,Unfinished,N/A,"Josh Denman,",kristy@jandjtree.com,Tecumseh,MI,"Tecumseh, MI",42.0031,-83.9447,(517) 262-9860,Trevor,Veg,0
+138J&L,,J&L storm services,Completed,Yes,Lance Thayer,Lance@jlutility.com,Edgewood,TX,"Edgewood, TX",32.6987,-95.8878,(214) 208-0033,Brian,Non-Union,0
+139J&L,,J&L storm services,Completed ,Yes,Lance Thayer,Lance@jlutility.com,Edgewood,TX,"Edgewood, TX",32.6987,-95.8878,(214) 208-0033,Brian,Union,0
+13Adl,Executed,"Adler Tree Service, Inc. ",Unfinished,Yes,Domenic Pisani,Domenicpisani@adlertree.com,Gibsonia,PA ,"Gibsonia, PA ",40.6301,-79.9704,,Trevor,Veg,0
+140JAB,Executed,JAB,Completed,Yes,Dan Scroggins ,dscroggins@jabservicesinc.com,Odessa,TX ,"Odessa, TX ",31.8457,-102.3676,806-201-2326,Josh,Non-Union,3
+141Jac,,Jackson & Jackson,Completed ,Yes,Steve Jackson,Jackson.Jackson.LLC@gmail.com,Middletown ,OH,"Middletown , OH",39.5151,-84.3983,(513) 267-2306,Kyle,Union,4
+142JF ,,JF Electric,Unfinished ,N/A,Lee Vickers,kajedllc@gmail.com,,,"Edwardsvill, IL",,,(336) 984-7454,Gilbert,Union,0
+143JJM,Executed,JJM Power LLC,Completed ,No,Joe Davis,joedavis@jjmpower.net,Birmingham,AL,"Birmingham, AL",33.5186,-86.8104,(231) 629-7209,Randall,Union,3
+144JJM,Executed,JJM Power LLC,Completed ,No,Joe Davis,joedavis@jjmpower.net,Windsor Locks,CT,"Windsor Locks, CT",41.9293,-72.629,(231) 629-7209,Randall,Union,4
+145JJM,Executed,JJM Power LLC,Completed ,No,Joe Davis,joedavis@jjmpower.net,Evart,MI,"Evart, MI",43.9006,-85.2581,(231) 629-7209,Randall,Union,4
+146JNR,Executed,"JNR Solutions, LLC",Unfinished ,N/A,JR Reese,jreese@jnrsllc.com,Chicago,IL,"Chicago, IL",41.8781,-87.6298,(815) 630-1957,Izabella,Union,0
+147K2 ,,K2 Industrial,Completed,Yes,David Alexander,DavidAlexander@K2Industrial.com,Highland ,IN,"Highland , IN",41.5536,-87.4519,(219) 798-8370,Brian,HVAC,0
+148K2W,Executed,K2W Utilities ,Completed ,Yes,Matt Wilson ,matt@k2wutilities.com,Fowler,OH,"Fowler, OH",41.3301,-80.5359,(330) 469-4122,Randall,Union,4
+149Kat,Executed,Kateri powerline,Completed ,Yes,Jonathan Manikateri,jonman@kateripowerline.com ,Odessa,TX,"Odessa, TX",31.8457,-102.3676,(406) 260-1383,Josh/Randall,Union,4
+14Adv,,Advent ,Completed ,No,David South,dsouth@adventup.com,Madison ,Al,"Madison , Al",34.6993,-86.7483,(256) 214-7370,Randall,Union,4
+150Ken,Executed,Kendall Veg Services,Completed,Yes,David Fiebelkorn,dfiebelkorn@wakendall.com,Lawrenceville,GA,"Lawrenceville, GA",33.9562,-83.9879,(470) 348- 7023,Trevor,Veg,0
+151Kes,Executed,Kess Line ,Completed ,No,Kevin Vance ,kvance@kessline.net,West Liberty ,KY,"West Liberty , KY",37.9215,-83.2613,(606) 359-1348,Chris/Nathan/Kyle,Union,5
+152Kil,,Killen,Unfinished,Yes,Will Vaughan,christy@killencontractors.com,Brandon,MS,"Brandon, MS",32.2732,-89.9859,(662) 571-8958,Kyle/ Chris ,Non-Union,0
+153KR ,,KR Utilities LLC,Unfinished ,N/A,Greg Robinson,Grobinson@krutilities.com,Baltimore,MD,"Baltimore, MD",39.2904,-76.6122,(716)790-2244,Brian,Union,0
+154KR ,,KR Utilities LLC,Unfinished ,N/A,Greg Robinson,Grobinson@krutilities.com,Cuba ,NY,"Cuba , NY",42.2181,-78.2753,(716)790-2244,Brian,Union,0
+155KSR,Executed,KSR ,Completed ,No,James Roberts,troberts@ksrstorm.com,Rush ,KY,"Rush , KY",38.2865,-82.6872,(606) 385-0405,Josh,Union,3
+156KSR,Executed,KSR ,Completed ,No,James Roberts,troberts@ksrstorm.com,Harrisburg ,PA,"Harrisburg , PA",40.2732,-76.8867,(606) 385-0405,Josh,Union,3
+157Kuh,,Kuharchick Construction ,Unfinished,N/A,Cam Cox,ccox@kuharchik.com,Exeter,PA,"Exeter, PA",41.3206,-75.8191,(570)237-5121,Izabella,Union,0
+158LBN,,"LBNP Restoration and Construction, LLC",Unfinished,N/A,Earl Weaden,Weaden7@aol.com ,Plant City ,FL,"Plant City , FL",28.0186,-82.1129,(813) 562-0601,Chris ,Non-Union,2
+159Lib,Executed,Liberty Electric Line Builders ,Completed ,Yes,Josh Andrews,josh.andrews@libertyelectriclb.com,Grove ,OK,"Grove , OK",36.5937,-94.7691,(417) 456-9696,Josh/Flash,Union,4
+15Aeq,Executed,Aequitas Power ,Completed ,Yes,Art Gregory,art.gregory@aequitaspower.com,Elizabethtown,KY,"Elizabethtown, KY",37.7031,-85.8649,(270) 766-9073,Izabella,Union,2
+160Lin,Executed,Line Craft ,Completed ,Yes,Brandon Gross,bg@linecraft.org,Monroe ,OH,"Monroe , OH",39.4403,-84.3622,(606) 658-1117,Nathan ,Union,4
+161Lin,Executed,Line Electric,Unfinished ,N/A,Greg Morris,greg.lineelectric@gmail.com,Marshall,MI,"Marshall, MI",42.2723,-84.9633,(269) 209-9793,Izabella,Union,0
+162LLC,,LLC International,Unfinished,N/A,Gerrad Bobo,g.leebobo@yahoo.com,Joaquin,TX ,"Joaquin, TX ",31.9651,-94.0692,(806) 544-7148,Josh/Gilbert,Non-Union,0
+163Loc,Executed,Locke's Electrical Limited,Unfinished ,No,Terry Davis,terry@lockeselectrical.ca,Prince Edward Island ,Canada ,"Prince Edward Island , Canada ",46.5107,-63.4168,(506) 866-4077,Josh/Nathan,Union,0
+164Lon,Executed,Lonestar ,Completed,Yes,Shawn Davis ,Shawn.davis@lonestarcorporation.com,Odessa ,TX ,"Odessa , TX ",31.8457,-102.3676,(432) 661-0428,Chris/Josh,Non-Union,2.833333333
+165Loo,Executed,Looks Great Tree,Unfinished,N/A,Kristian Agapollo,kristian@looksgreatservices.com ,Columbia,MS,"Columbia, MS",31.2518,-89.8376,(516) 369-8445,Trevor,Veg,0
+166Mac,,Mac Power,Completed ,Yes,Greg Hornung,gregh@macpowerllc.com,Gilbert ,AZ,"Gilbert , AZ",33.3528,-111.789,(480) 221-3239,Brian,Union,0
+167Map,Executed,Maple City Electric,Completed ,No,Jesse H,Jesse@maplecityelectric.com,Marine City ,MI,"Marine City , MI",42.7195,-82.4928,(519) 360-0101,Randall,Union,3.333333333
+168Mar,Executed,Martin Inc Powerline Construction ,Completed,No,John Martin,Jlmart270@aol.com,Rosebud,TX,"Rosebud, TX",31.0735,-96.9788,(254) 495-4467,Kerney,Non-Union,0
+169Mav,Executed,Maverick,Completed,Yes,Liam McNally,LMcNally@MaverickCorporation.com,Boyne City,MI,"Boyne City, MI",45.2169,-85.0139,(203) 314-5427,Randall,Non-Union,0
+16Ago,Executed,Agostino Utilities ,Completed ,No,Michelle Schmidt,mschmidt@agostinoutilities.com,Schwenksville,PA,"Schwenksville, PA",40.2562,-75.4638,(215) 272-1873,Randall,Union,4
+170Mav,Executed,Maverick,Completed,Yes,Liam McNally,LMcNally@MaverickCorporation.com,Manassas,VA,"Manassas, VA",38.7509,-77.4753,(203) 314-5427,Randall,Non-Union,4
+171MBI,Executed,MBI Tree Service,Completed,Yes,Luis Paez,Paez@mbitreeservice.com,Waynesville ,OH,"Waynesville , OH",39.5298,-84.0866,(513)496-4420,Trevor,Veg,0
+172McC,,McCoy Tree Surgery Co. ,Unfinished,N/A,Mark Kleine ,mkleine@live.com,Norman,OK,"Norman, OK",35.2226,-97.4395,(405) 579-6756,Trevor,Veg,0
+173Mcn,Executed,Mcnutt Enterprises LLC,Unfinished,N/A,Andrea Mcnutt,info@mcnuttenterprisesllc.com,Carbon Hill,AL,"Carbon Hill, AL",33.8909,-87.5267,(205) 544-5838,Trevor,Veg,0
+174Mer,,Meridian,Unfinished,No,Dustin Hall,dustin.hall@meridian-trucking.com,,,", ",,,(682) 803-8362,Brian,HVAC,0
+175Mid,Executed,Midwest Powerline ,Completed ,No,Chet Monaweck ,Chetmonaweck15@gmail.com,Battle Creek ,MI,"Battle Creek , MI",42.3212,-85.1797,(269) 275-3188,Kyle,Union,2.375
+176Moo,Executed,Moorehead Brothers,Completed,Yes,Heath Sessions,hsessions@moorheadbros.com,Blacksburg,SC,"Blacksburg, SC",35.1215,-81.517,(704) 807-1575,Trevor,Veg,0
+177Mor,Executed,Morris Tree Services ,Unfinished,No,Corey Morris,brandi_grffth@yahoo.com,Rising Star ,TX ,"Rising Star , TX ",32.0954,-98.9647,(325) 998-3864,Trevor,Veg,0
+178Mou,,Mountianside Power,Completed,Yes,Shade Boice,Shade@mountainsidepower.org,,CO,", CO",,,(307) 774-4517,Kerney,Non-Union,0
+179Nom,,Nomad Power Group ,Completed,Yes,Clint Williams ,cwilliams@nomadpowergroup.com,Sumrall,MS,"Sumrall, MS",31.4168,-89.5365,(601) 921-1623,Kerney,Non-Union,0
+17All,,Alliance Powerline ,Completed ,No,Nick Braun,nick@alliancepowerline.com,San Angelo ,TX ,"San Angelo , TX ",31.4638,-100.437,(905) 926-7942,Josh/Flash,Union,3.5
+180Nor,,North Eastern Tree Service Inc ,Unfinished,N/A,Steve Kidd ,s.kidd@northeasterntree.com,Cranston,RI,"Cranston, RI",41.7798,-71.4373,(401) 374-3511 ,Trevor,Veg,0
+181NXS,,NXS Powerline,Unfinished ,Yes,Ginger Rasberry,Grasberry@nxspowerline.net,Lucedale,MS,"Lucedale, MS",30.9252,-88.59,(601) 770-2443,Flash,Union,0
+182Ori,,"Orion Utility Contractors, LLC",Unfinished,N/A,Bob Dubois,bdubois@orionuc.net,Danielson,CT,"Danielson, CT",41.8026,-71.8859,(860)608-2739,Izabella,Union,0
+183Ove,,Over and Under,Unfinished,Yes,Derek Lozano,over.underllc@yahoo.com,Breham,TX,"Breham, TX",30.1669,-96.3977,(979) 777-1534,Delvin/Chris,Non-Union,4.5
+184Ox ,Executed,Ox Tree Services  ,Unfinished,N/A,Andrew Lovestrand ,andrew@tra-volt.com,Birmingham ,AL,"Birmingham , AL",33.5186,-86.8104,(407) 937-8159,Trevor,Veg,0
+185Pan,Executed,Pannell CO,Completed,No,Tanner Pannell,tanner@pannellco.com,Leakey,TX ,"Leakey, TX ",29.7256,-99.7605,(830) 591-8221,Trevor,Veg,0
+186Pat,Executed,Patriot Power,Completed ,Yes,Jeff Sheets,jsheets@patriotpwr.com,London,KY,"London, KY",37.1289,-84.0833,(828) 263-7565,Trevor/Randall/Chris ,Union,4
+187Pat,Executed,Patriot Tree Surgeons ,Unfinished,N/A,Dave Ebbert ,debbert@patriotlineclearing.com ,Allentown,PA ,"Allentown, PA ",40.6084,-75.4902,(570) 428-4977,Trevor,Veg,0
+188PCA,Executed,PCA Services,Unfinished,N/A,David Grooms,David.grooms@pca-services.net,,,", ",,,(615) 289-2971,Kyle/Nathan,DAT,3
+189Pea,Executed,Peaches Power,Completed ,Yes,Joseph Peachy,Jpeachy@peachespower.com,Harrison,OH,"Harrison, OH",39.2535,-84.7911,(920) 517-8397,Chris ,Union,4
+18Alp,Executed,Alpha Omega ,Completed ,No,Tom Gonzales,tom@aoutilityservices.com,Boyne Falls,MI,"Boyne Falls, MI",45.1673,-84.9163,(586) 788-3407,Chris/Trevor/Kyle,Union,3
+190Pha,,Phase 3,Completed,Yes,Damon Rose,damon@phase3eps.com,Midland ,TX ,"Midland , TX ",31.9973,-102.0779,(325) 242-6156,Josh/Gilbert,Non-Union,3
+191Pha,Executed,Phased Utilities ,Completed ,Yes,Kelly Ward,kward@phasedutilities.com,Hiddenite,NC,"Hiddenite, NC",35.9229,-81.176,(828) 446-9236,Flash,Union,3
+192Pin,,Pinnacle Unified LLC,Completed ,No,Raul Dominguez,rad@pinnacleunified.com,Houston ,TX,"Houston , TX",29.7604,-95.3698,(832) 264-0959,Chris,Union,2.5
+193Pip,Executed,Pipes Utility ,Completed ,No,Jason Pipes,jpipes@pipesutilitycontractors.com,Abilene ,KS ,"Abilene , KS ",38.9172,-97.2139,(785)280-9690,Chris,Union,2.5
+194Pla,Executed,Platinum,Completed ,No,Bobby Waters,bobby@ckwconstruction.com,Brooklyn,MI,"Brooklyn, MI",42.1056,-84.2488,(225) 335-8899,Randall,Union,3.5
+195Pla,Executed,Platinum Land & Dirt Services,Unfinished,Yes,Hugo Jasso,hjasso@platinumser.com,Pasadena ,TX ,"Pasadena , TX ",29.6911,-95.2091,(281) 802-4767,Trevor,Veg,0
+196PLC,Executed,PLC,Unfinished,N/A,Hud Garrett,hudgarrett_plc@yahoo.com      ,Springfield,MO,"Springfield, MO",37.2089,-93.2923,(573)-330-4533,Kyle,Non-Union,0
+197Pow,,Power Delivery Alliance,Unfinished,N/A,Rick Bufford,rbufford@impulseec.com,Moore,OK,"Moore, OK",35.3395,-97.4867,(405) 205-7977,Izabella,Union,4
+198Pow,Executed,Power Pros ,Completed ,No,Jay Dolan,Jayedolan@powerpros1.net,Muscle Shoals,AL,"Muscle Shoals, AL",34.7448,-87.6675,(256) 710-0341,Randall,Union,3
+199Pow,Executed,Power Pros ,Completed ,No,Jay Dolan,Jayedolan@powerpros1.net,Hartford ,CT,"Hartford , CT",41.7658,-72.6734,(256) 710-0341,Randall,Union,3
+19Als,,Alsup & Brothers LLC,Completed ,Yes,Cole Alsup,alsupandbros@yahoo.com,West Paducah,KY,"West Paducah, KY",37.0834,-88.6848,(573) 620-6291,Trevor/Randall,Union,4
+200Pow,,Power Source One,Unfinished ,N/A,Mike Noe,mikenoe55@yahoo.com,London,KY,"London, KY",37.1289,-84.0833,(606) 273-7950,Trevor/Chris,Union,3
+201Pow,Executed,Power Standard ,Completed,Yes,Matt Racette,,Andrews ,TX ,"Andrews , TX ",32.3187,-102.5457,(432) 701-8906,Brian,Non-Union,3
+202Pow,Executed,Powerline Construction Services,Completed ,Yes,Tim Greenwood,Tim.greenwood@powerlineconstructionservice.com,Kingston Springs,TN,"Kingston Springs, TN",36.1028,-87.115,(931)675-3344,Nathan,Union,0
+203Pow,Executed,Powerline Solutions,Completed,Yes,Doug Card ,doug@pls.llc,Cleveland ,OH,"Cleveland , OH",41.4993,-81.6944,(908) 705-3106,Kyle,DAT,3
+204Pra,Executed,Praxel Line Services,Unfinished ,N/A,Dylan Carpenter,dylancarpenter@praxellines.com,London,KY,"London, KY",37.1289,-84.0833,(606) 401-3522,Trevor/Randall,Union,4
+205Pre,,Premier Power,Unfinished ,N/A,Slade Guthrie ,Slade@premierpowercompany.com,Cullman,AL ,"Cullman, AL ",34.1748,-86.8436,(256) 294-3053,Kyle,Non-Union,0
+206Pre,Executed,Premier Voltage,Completed ,Yes,Miranda Sayers,miranda@premiervoltagepower.com,Indian River,MI,"Indian River, MI",45.412,-84.6136,(231) 445-1305,Randall,Union,5
+207Pre,NDA Signed,Premium Utility ,Completed ,Yes,Jake Meeks,jake@premiumutilitycontrctor.com,Dayton,OH,"Dayton, OH",39.7589,-84.1916,(909) 633-5627,Randall,Union,2
+208PRH,Executed,PRH,Completed ,Yes,Cecil Hoskins,ch@prhgrp.com,Saginaw ,MI,"Saginaw , MI",43.4195,-83.9508,(989) 284-3335,Flash,Union,4
+209Pri,Executed,Priority Electric,Completed,Yes,John Mcdowra ,priorityelectric@ymail.com,Decatur,AL,"Decatur, AL",34.6059,-86.9833,(256) 303-3674,Randall,Non-Union,4
+20Alt,,Altitude Energy,Completed ,No,Josh Bradford,jbradford@altitudeenergy.com,Kreenesburg,CO,"Kreenesburg, CO",40.1083,-104.5202,(720) 236-5161,Randall,Union,4
+210Pro,,Pro Vac/Cyclone,Completed,Yes,Daniel Tarver,daniel.tarver@pro-vac.com,,,", ",,,(918) 407-0010,Brian,HVAC,0
+211Qua,Executed,Quail Energy,Completed,Yes,Sammy Villa,sdenby@quailenergy.com,Andrews ,TX ,"Andrews , TX ",32.3187,-102.5457,(432) 312-8286,Chris ,Non-Union,2
+212Qua,,Quality Choice Contruction ,Unfinished,N/A,Jason Bowden ,qualitychoice@twlakes.net,Jamestown,TN,"Jamestown, TN",36.4273,-84.9319,(931) 265-5288,Trevor,Veg,0
+213Qua,,Quality Powerline LLC,Completed,No,Richard Zackocki,qualityprichard@gmail.com,,OK,", OK",,,(405) 664-1218,Kyle,Non-Union,0
+214R &,Executed,R & R Powerline,Completed,No,Bobby Martin,r.rpowerline@yahoo.com,Sayre,OK,"Sayre, OK",35.2912,-99.636,(580) 729-3175,Randall,Non-Union,4
+215R&M,Executed,R&M  Poleline,Unfinished,N/A,Rudy Martinez ,g.bennett@rmpoleline.com,"Plattsburg,",MO,"Plattsburg,, MO",39.5655,-94.4483,(816) 565-1156,Kerney,Non-Union,0
+216R&S,Executed,R&S Power Services ,Unfinished ,N/A,Peter J. Ruggiero,peter.ruggiero@rspowerservice.com,Pinconning,MI,"Pinconning, MI",43.8564,-83.9562,(973) 738-9458,Kerney,Union,0
+217Rai,Executed,Raines Electric ,Unfinished,No,Matonna Raines ,matonnaraines@rainesec.onmicrosoft.com,Shawnee,OK,"Shawnee, OK",35.3273,-96.9253,(405) 761-7033,Kerney,Non-Union,0
+218Rea,Executed,Read Electric,Unfinished ,No,Ronald Beiter,readelectric@aol.com,Saugerties,NY,"Saugerties, NY",42.0776,-73.9529,(845) 246-3426,Trevor ,Union,0
+219Red,Executed,Red Rover,Completed ,Yes,Jerry Hilton,Bwilkins@redroverelectric.com,Louisville ,KY,"Louisville , KY",38.2527,-85.7585,(502) 472-7893,Kyle/Trevor,Union,3
+21Ame,Executed,"American Made Tree Service, Inc. ",Completed,No,Michael Mayer,Info@americanmadetree.com,Livonia,MI,"Livonia, MI",42.3684,-83.3527,(734) 773-2007,Trevor,Veg,0
+220Ren,Executed,Renegade Group,Unfinished,N/A,Shane Cooper,alex.hernandez@renegadegroupllc.com,Austin ,TX,"Austin , TX",30.2672,-97.7431,(512) 589-3014,Chris ,Non-Union,4
+221S &,Executed,S & S ,Completed,No,Lance Swanson,lanceswanson@gmail.com,Tifton,GA,"Tifton, GA",31.4505,-83.5085,(229) 392-0057,Josh,Non-Union,3
+222Saf,,Safe Zone Line,Completed ,No,Victoria Legra,vlegra@safezoneline.com,Crawfordville,FL,"Crawfordville, FL",30.1766,-84.3752,(732) 796-3201,Randall,Union,0
+223Sco,Redlines Returned,Scott Pole Line ,Completed,Yes,Jeff Scott,jscott@scottpoleline.com,Stephenville,TX ,"Stephenville, TX ",32.2207,-98.2023,(254) 979-0574,Brian,Non-Union,4.333333333
+224Sco,Redlines Returned,Scott Pole Line ,Completed,Yes,Daniel Gore,,Stephenville,TX ,"Stephenville, TX ",32.2207,-98.2023,(870) 307-9019,Brian,Non-Union,4.333333333
+225She,,Shelton Energy ,Completed,Yes,Michael Carbo ,mcarbo@mas-ent.net,Alexandria,LA,"Alexandria, LA",31.3113,-92.4451,(318) 792-9823,Randall,Non-Union,4
+226SM ,Executed,SM Electric,Unfinished ,N/A,Andy Frost ,aforst@smelectric.com,Rahway,NJ,"Rahway, NJ",40.6082,-74.2776,(908) 552-5126 ,Chris,Union,4
+227Sou,Executed,Southeast Energy Solutions,Unfinished ,N/A,Thomas Braxton,Tbraxton@southeastenergyco.com,,CT,", CT",,,(863) 448-6215,Flash,Union,0
+228Sou,Executed,Southeast Energy Solutions,Unfinished ,N/A,Thomas Braxton,Tbraxton@southeastenergyco.com,,FL,", FL",,,(863) 448-6215,Flash,Union,0
+229SPE,Executed,SPE ,Completed ,Yes,Sven Tueber,steuber@spepowerfd.com,Jacksonville,FL,"Jacksonville, FL",30.3322,-81.6557,(813) 326-1099,Randall,Union,4
+22APE,Executed,APEX,Completed,Yes,Tony Stone,tony.slone@apexls.org,Huntington,WV,"Huntington, WV",38.4192,-82.4452,(419) 295-3396,Josh/Gilbert,Non-Union,3
+230SPE,Executed,SPE ,Completed ,Yes,Crystal Jordan,cjordan@spepower.com,Jacksonville,FL,"Jacksonville, FL",30.3322,-81.6557,(765) 438-2868,Randall,Union,4
+231SPE,Executed,SPE ,Completed ,Yes,Troy Vonconant ,tvanconant@spepower.com,Niles ,OH,"Niles , OH",41.1828,-80.7654,(810) 533-9433,Randall,Union,4
+232Sta,,Starfire Energy,Unfinished,N/A,Adam Gau ,Ashercreek@gmail.com,Poplar Bluff,MO,"Poplar Bluff, MO",36.756,-90.3929,(573)741-9419,Kerney,Non-Union,0
+233Sta,Executed,State Line Construction,Completed ,Yes,Melanie Steele,melanie@statelineusa.com,Glendale Redford,MI,"Glendale Redford, MI",42.4895,-83.1446,(313) 909-7509,Brian,Union,3
+234Str,,StreamTech Inc,Completed,No,Ryan Brenner,rbrenner@streamtech.com,Houston,TX,"Houston, TX",29.7604,-95.3698,(936) 648-7265,Brian,HVAC,0
+235SW ,,SW Power LLC,Completed ,Yes,Justin Swaggen ,justin@swpowerllc.com,St.Louis,MO,"St.Louis, MO",38.627,-90.1994,(618) 698-1552,Kyle,Union,0
+236SW ,Executed,SW Power LLC,Completed ,Yes,Justin Swaggen ,justin@swpowerllc.com,Harrisenburg,PA,"Harrisenburg, PA",40.2732,-76.8867,(618) 698-1552,Kyle,Union,0
+237Swa,,Swartz Mowing,Completed,No,Kyle Swartz,swartz@kih.net,Olympia ,KY,"Olympia , KY",38.1531,-83.5618,(606) 674-2971,Trevor,Veg,0
+238Syn,Executed,Synergy Line Solutions,Unfinished ,N/A,Brant Iaacs,brant@synergylinesolutions.com,Mckee,KY,"Mckee, KY",37.4329,-83.9986,(859) 200-1587,Chris,Union,2.5
+239T &,,T &  T,Completed,No,Barrie Hall ,Lakesautocare@outlook.com,Hanwell,Canada ,"Hanwell, Canada ",45.8896,-66.6838,(506) 260 0237,Randall,Non-Union,4
+23App,Executed,Appalachian Utiltiy ,Completed ,Yes,Jeff Coleman ,jeff.coleman@appalachianutilityservices.com,Rush ,KY,"Rush , KY",38.2865,-82.6872,(304) 881-5500,Chris,Union,3.5
+23Ph,Executed,3Phase Power,Completed ,Yes,Shannon Leatherwood,shannon@3phase-power.net,Chattanooga,TN,"Chattanooga, TN",35.0456,-85.3097,(423) 834-2914,Randall,Union,4
+240T&R,,T&R,Completed,No,Todd Miller,toddmilco@gmail.com,Hooker ,OK,"Hooker , OK",36.8606,-101.2139,(620) 391-1936,Kyle,Non-Union,2
+241Tay,Executed,Taylor Electric ,Completed,Yes,Ian Kelley,ikelley@taylorelectricutility.com,Madison,AL,"Madison, AL",34.6993,-86.7483,(256) 724-1126,Izabella,Non-Union,4
+242TDC,Executed,"TDC2, LLC Engineering Firm",Completed,Yes,Scott Mackinaw,smackinaw@tdc2.com,Wylie,TX,"Wylie, TX",33.0151,-96.5389,(469) 999-7411,Chris,DAT,2.5
+243TDC,Executed,"TDC2, LLC Engineering Firm",Completed,Yes,Richard Campos ,rcampos@tdc2.com,Wylie,TX,"Wylie, TX",33.0151,-96.5389,(832) 421-6088,Chris,DAT,2.5
+244Tec,Redlines Returned,Tech Serv ,Completed,Yes,Nick Hebert,Nhebert@techserv.com,Tyler,TX,"Tyler, TX",32.3513,-95.3011,(432) 266-8301,Kyle/Nathan,DAT,3
+245Ter,Executed,TerraJet Solutions,Completed,No,Dax Stewart,dax@terrajetsolutions.com,Ivanhoe,TX,"Ivanhoe, TX",33.6568,-96.15,(903) 449-3289,Kyle,HVAC,0
+246The,,The Patriot Group,Unfinished,N/A,Jeff Forbes,jeff@go-patriot.com,,MO,", MO",,,(619) 933-2167,Trevor,Veg,0
+247The,Executed,The Superior Hydrovac,Completed,Yes,Timothy Martin ,Timothy.martin@thesuperiorhydrovac.com,Kansas City,MO,"Kansas City, MO",39.0997,-94.5786,(817) 773-4581,Kerney ,HVAC,0
+248The,Executed,The Superior Hydrovac,Completed,Yes,Timothy Martin ,Timothy.martin@thesuperiorhydrovac.com,,TN,", TN",,,(817) 773-4581,Kerney ,HVAC,0
+249The,Executed,The Superior Hydrovac,Completed,Yes,Timothy Martin ,Timothy.martin@thesuperiorhydrovac.com,Houston,TX,"Houston, TX",29.7604,-95.3698,(817) 773-4581,Kerney ,HVAC,0
+24Arm,,Armada,Completed,N/A,Dwayne Robertson,armadahydrotech@outlook.com,,,", ",,,(325) 436-4826,Brian,HVAC,0
+250The,Executed,The Superior Hydrovac,Completed,Yes,Timothy Martin ,Timothy.martin@thesuperiorhydrovac.com,Fort Worth,TX,"Fort Worth, TX",32.7555,-97.3308,(817) 773-4581,Kerney ,HVAC,0
+251Tho,Executed,Thomas Contracting ,Unfinished,N/A,Charles Slack,charles@thomascontracting.com,Sweetwater,TN,"Sweetwater, TN",35.6012,-84.461,(423) 506-9116,Trevor,Veg,0
+252Tho,,Thompson HV Storm Restoration,Unfinished ,N/A,Rickie Thompson,thompsonhv.stormrestoration@gmail.com,Katy,TX,"Katy, TX",29.7858,-95.8244,(504) 578-3029,Izabella,Union,0
+253Tie,Executed,Tier One Utilities,Unfinished,N/A,Justin Sims,Tieroneutilities@gmail.com,Trenton ,GA,"Trenton , GA",34.8721,-85.509,(423) 260-9310,Chris,Union,2.5
+254Tim,,Timber Electric Inc,Unfinished ,N/A,Jeff Wilson,Timberelectric1@gmail.com,Boaz,AL,"Boaz, AL",34.2032,-86.1524,(256) 202-9043 ,Izabella,Union,0
+255Tit,Executed,Titan Utility ,Completed,Yes,Lani Boudreaux,Laniboudreaux@titanutility.net,Tickfaw,LA ,"Tickfaw, LA ",30.5755,-90.4801,(985) 518-2896,Kerney ,DAT,0
+256TLH,Executed,TLH Power,Completed ,Yes,Tim Sullivan,Tsullivan@tlhpower.com,Dillsboro,IN,"Dillsboro, IN",39.017,-85.0609,(812) 584-2080,Randall ,Union,0
+257Top,,Top of the Line Electic ,Unfinished,N/A,AJ Lozano ,aj.topofline@gmail.com,Midland ,TX,"Midland , TX",31.9973,-102.0779,(432) 631-4647,Kerney,Non-Union,0
+258Tot,,Total Solutions,Completed,No,Danny Griswold,danny.griswold@tsi-grp.com,Owasso,OK,"Owasso, OK",36.2695,-95.8547,,Trevor,Veg,0
+259Tra,,"Tradewind, TWC",Unfinished,Yes,David Mcwhirter,David@tradewindcontrols.com,Midland ,TX,"Midland , TX",31.9973,-102.0779,(806) 549-7389,Kerney,Non-Union,0
+25Art,Executed,Artis Power,Unfinished ,N/A,Moe Artis,mo@artispwr.com,Atlanta ,GA,"Atlanta , GA",33.749,-84.388,(334) 530-3709,Izabella,Union,0
+260Tra,Executed,Travolt ,Completed ,No,Eric Estrada,eric@tra-volt.com ,Huntsville,AL,"Huntsville, AL",34.7304,-86.5861,(205) 281-7566,Josh/Randall/Kyle,Union,3.7
+261Tra,Executed,Travolt ,Completed ,No,Eric Estrada,eric@tra-volt.com ,Pittsburgh,PA,"Pittsburgh, PA",40.4406,-79.9959,(205) 281-7566,Josh/Randall/Kyle,Union,4
+262Tre,Executed,Trees Unlimited,Unfinished,N/A,Wendell Hicks,whicks@treesunlimitedco.com,,,", ",,,(706) 252 5339,Trevor,Veg,0
+263Tri,,Tri- State Services & Cleaning,Unfinished,N/A,Cody Smith ,codysmith4042@gmail.com ,Jackson,MS ,"Jackson, MS ",32.2988,-90.1848,(850) 572-9461,Trevor,Veg,0
+264Tri,,Tri-Mgroup,Completed,Yes,James Oferrell,joferrell@tri-mgroup.com,Lock Haven,PA,"Lock Haven, PA",41.137,-77.4469,(717) 758-2168,Trevor/Randall,Non-Union,4
+265Uni,Executed,United Powerline Solutions,Unfinished ,Yes,Thomas Williamson , thomasw@upowerlines.com,,,", ",,,(812) 431-2323,Flash,Union,0
+266Uni,Executed,United Tree Environmental Management Inc,Unfinished,N/A,Samuel De Lucio,samuel.delucio@unitedtem.com,,,", ",,,(909) 781 1286,Trevor,Veg,0
+267UPI,,UPI,Completed ,No,Auila Smith ,qkc5@aol.com,Kingfisher ,OK,"Kingfisher , OK",35.8614,-97.9317,(405) 833-1015,Randall,Union,0
+268UTE,,UTEC,Unfinished,N/A,Chad Faulkner,cfaulkner@utec-inc.com,Tucker,GA,"Tucker, GA",33.8482,-84.2165,(706) 601-3037,Brian,Union,0
+269UTE,,UTEC,Unfinished,N/A,Mike Harrison,mharrison@utec-inc.com,Tucker,GA,"Tucker, GA",33.8482,-84.2165,(678) 986-0468,Brian,Union,0
+26Art,Executed,Artis Power,Unfinished ,N/A,Moe Artis,mo@artispwr.com,,KY,", KY",,,(334) 530-3709,Izabella,Union,0
+270Uti,,Utility Storm Response ,Completed,Yes,Trey Clark ,tclark@usrstorm.com,Clayton,AL,"Clayton, AL",31.8782,-85.4496,(250) 300-4510,Chris ,Non-Union,3
+271Uti,,Utility Storm Response ,Completed ,Yes,Trey Clark ,tclark@usrstorm.com,Decatur,AL,"Decatur, AL",34.6059,-86.9833,(250) 300-4510,Chris ,Union,3
+272Val,Executed,Valley Storm Services,Completed ,Yes,Michael Campbell,mcampbell@valleystormservices.com,Spring City,TN ,"Spring City, TN ",35.6856,-84.8614,(423) 802-7239,Izabella,Union,4
+273Van,Executed,Vantage,Unfinished,N/A,Josh Kaufman,jkaufman@vantagesvcs.net,Midland ,TX,"Midland , TX",31.9973,-102.0779,(620) 532-4152,Chris ,HVAC,4
+274Van,,Vantage Contractors ,Unfinished,Yes,Justin Fortenberry,Justin@vantage-contractors.com,Allen,LA,"Allen, LA",32.9265,-96.6202,(225) 573-6390,Brian,Union,0
+275Var,Executed,Varnell Power,Completed,No,Roy Varnell,varnellpower@outlook.com,Sayre,OK,"Sayre, OK",35.2912,-99.636,(580) 729-2171,Randall/Kyle ,Non-Union,3.666666667
+276VEC,Executed,VEC,Unfinished,Yes,Keith Ferry ,k_ferry@vecohio.com,Girard,OH,"Girard, OH",41.1539,-80.7015,(330) 240-7177,Randall/Nathan,Union,4
+277Vec,Executed,Vectra Hydrovac,Completed,Yes,Karl Lassberg,klassberg@vectaenvironmental.com,Gonzales ,LA,"Gonzales , LA",30.2385,-90.9201,(713) 254-6265,Chris ,HVAC,4
+278Vis,,Vision Utilities,Completed ,Yes,Daniel Majorowski  ,,Landsdale,PA,"Landsdale, PA",40.2415,-75.2838,(617) 921-5689,Trevor,Union,0
+279W2 ,Executed,W2 Energy ,Completed ,Yes,Brock Wright,brock@w2energyservices.com,Alexzandria,AL,"Alexzandria, AL",33.7739,-85.8855,(256)689-1269,Randall,Union,4
+27Atk,,Atkins ,Completed ,Yes,April Madding ,Aprilm@atkinselectric.com,El Dorado,AR,"El Dorado, AR",33.2076,-92.6663,(870) 814-2158,Randall,Union,4
+280W2 ,Executed,W2 Energy ,Completed ,Yes,Tyler Wells,tyler@w2energyservices.com,Hartford ,CT,"Hartford , CT",41.7658,-72.6734,(256)454-0265,Randall,Union,4
+281WAR,Executed,WARD,Completed ,Yes,Scott Montoya,sscottmontoya@wardelectriccompany.com,Longmont ,CO,"Longmont , CO",40.1672,-105.1019,(303) 709-0150,Randall,Union,4
+282War,,Warrior Electric ,Completed ,No,Corey Mahan ,cmahan@warriorok.com,OKCity,OK,"OKCity, OK",35.4676,-97.5164,(918) 576-8581,Flash,Union,5
+283Whi,,White Wolf Utility,Unfinished,N/A,Valentin Pantoja,vpantoja@whitewolfutilityllc.com,Dallas,TX ,"Dallas, TX ",32.7767,-96.797,(956) 624-3257,Izabella,Non-Union,0
+284Wil,,Willey Construction,Unfinished ,N/A,Brad Willey,bwilley@willeyconstruction.com,Levering,MI,"Levering, MI",45.6411,-84.7895,(231) 420-4648,Randall/Chris ,Union,4
+285Wit,,Witchita Tree Service,Unfinished,No,Robert Phillips,Robert@wichita-treeservice.com,Witchita ,KS,"Witchita , KS",37.6872,-97.3301,(316) 841-8734,Trevor,Veg,0
+286XOH,,XOH Powerline,Unfinished,Yes,Chris Reynolds,Info@xohpowerline.com,Barrie,Canada ,"Barrie, Canada ",44.3894,-79.6903,(705) 826-4964,Nathan ,Non-Union,0
+28Att,,Attagurl Consulting,Completed ,Yes,Shar Woehl,shar@attagurl.com,,,", ",,,(325) 500-5907,Brian,Consulting,0
+29AVO,Executed,AVO Electric LLC,Completed ,Yes,Shane Ezyk ,avo.electricllc@gmail.com,Huntsville,AL,"Huntsville, AL",34.7304,-86.5861,413-271-2731,Randall,Union,3
+30AVO,Executed,AVO Electric LLC,Completed ,Yes,Shane Ezyk ,avo.electricllc@gmail.com,New York City,NY,"New York City, NY",40.7128,-74.006,413-271-2731,Randall,Union,3
+31BB,Redlines Returned,B & B ,Unfinished,N/A,Colton Seymour,colton.seymour@bbecon.com,Canton ,MS,"Canton , MS",32.6126,-90.0367,(228) 297-1920,Randall,Non-Union,4
+32BC,Executed,B & C Tree Services,Completed,Yes,Daniel Riley,bcrileytreeservices@yahoo.com,Summall,MS ,"Summall, MS ",31.4168,-89.5365,(601) 606-9950,Trevor,Veg,0
+33BN,Executed,B&N Tree and Debris LLC,Unfinished,Yes,Billy Null,billynull1@gmail.com,Dixon,MO,"Dixon, MO",37.9922,-92.0946,(573) 528-7648,Trevor,Non-Union,0
+33S,Redlines Returned,3S,Completed,No,Felix Garza,Felix.garza@3-sservices.com,Carrizo Springs ,TX ,"Carrizo Springs , TX ",28.5245,-99.8606,(432) 934-1937,Kyle,Non-Union,3
+34Bac,Executed,Baccos Tree Service,Unfinished,N/A,Ivan Zavala,Ivanz@gmail.com,Owasso,OK,"Owasso, OK",36.2695,-95.8547,(918) 557-0725,Trevor,Veg,0
+35Bac,,Backbone,Completed ,Yes,Jerry Heimkreiter,j.heimkreiter@backboneps.com,Cleves,OH,"Cleves, OH",39.1612,-84.7485,(513) 403-6402,Brian,Union,0
+36Bai,Executed,Bailey and Bailey ,Completed ,Yes,Joey Bailey ,baileybaileypower@gmail.com,Hurricane ,WV,"Hurricane , WV",38.4326,-82.0201,(304) 549-8379,Chris/Kyle/Brian,Union,5
+37Bat,Executed,Batte Pole Line LTD ,Completed,No,Tyler Batte,tbatte@battepoleline.com,Walkerton,Canada ,"Walkerton, Canada ",44.1334,-81.1506,(519) 901-1020,Chris ,Non-Union,2.5
+38Bea,Redlines Returned,Beachview,Completed,Yes,Ronnie Page,ronniepage@beachviewenergy.com,Brunswick,GA,"Brunswick, GA",31.1499,-81.4915,(432) 312-4726,Kyle,DAT,5
+39Ben,,Benton,Completed,Yes,Brad Webb,bwebb@benton-georgia.com,Douglaville ,GA,"Douglaville , GA",33.7515,-84.7477,(601) 270-5486,Brian,HVAC,3
+40BES,,BESCO,Unfinished,No,John Kits,jkits@besco.com,Knoxville,TN,"Knoxville, TN",35.9606,-83.9207,(865) 556-5837,Trevor,Union,0
+41BH ,,BH Electric,Completed ,No,Gabe Henson,ghenson@bhelectricllc.com,El Dorado,IL,"El Dorado, IL",37.8173,-88.4384,(618) 889-0189,Randall,Union,4
+42Bix,,Bixby ,Completed,Yes,Chet Weirick,chet.weirick@bixbyelectric.com,Albuquerque,NM,"Albuquerque, NM",35.0844,-106.6504,(505) 506-5416,Josh ,Non-Union,3.75
+43Bla,,Black&Mcdonald,Unfinished,N/A,Carol Baxter,cbaxter@blackandmcdonald.com,,,", ",,,(816) 719-5665,Randall,Union,4
+44Bla,,Blackfield Industries LLC,Unfinished,N/A,Richard Rangel,r.rangel@blackfieldindustries.com,Hobbs ,NM,"Hobbs , NM",32.7026,-103.136,(915) 478-4385,Kerney,Non-Union,0
+44G ,Executed,4G Electric,Completed,No,Hadley Gilbert,Hadley@4gelectricinc.com,Clovis ,NM,"Clovis , NM",34.4048,-103.2052,(575) 749-0161,Brian,Non-Union,5
+45Bla,,Blackout,Unfinished,N/A,,,,,", ",,,,Follow up Kyle,DAT,4
+46Blo,,Bloecher Electric ,Unfinished,N/A,Bill Bloecher,bboecher@bloecherelectric.com,New Oreals ,LA,"New Oreals , LA",29.9511,-90.0715,(504) 439-8558,Randall,Non-Union,3
+47BLS,,BLS Electric ,Unfinished,Yes,Freddie Verela ,fvarela@blseinc.com,Odessa ,TX ,"Odessa , TX ",31.8457,-102.3676,(432) 770-1229,Chris ,Non-Union,0
+48Bra,Executed,Braves ,Completed,Yes,Ashley Newbrough,anewbrough@braveservicesinc.com,Andrews ,TX ,"Andrews , TX ",32.3187,-102.5457,(432) 271-8940,Josh,Non-Union,4.375
+49Bre,Executed,Brexan,Completed,Yes,Josh Lowery,jlowery@brexan.com,Minolea ,TX ,"Minolea , TX ",32.6632,-95.4883,(903) 262-6412,Josh,Non-Union,4.5
+50Bri,,Bright Star,Completed ,Yes,Evan Sowders,Evan@bright-star.us,Sour Lake ,TX,"Sour Lake , TX",30.1413,-94.4044,(409) 658-3798,Josh,Union,3
+51Bro,,Brothers Brothers,Unfinished,N/A,Darrell Povel,info@bbusutilities.com,Houston ,TX,"Houston , TX",29.7604,-95.3698,(832) 808-9902,Chris,Union,0
+52Bul,Executed,Bully ,Completed,Yes,David Barras,dbarras@bullyind.com,Broussard,LA,"Broussard, LA",30.1472,-91.9612,(337) 319-8144,Brian,HVAC,3
+53Bur,Executed,Burlin Powerline,Completed,No,Brian Kuhl,bkburlinpl@gmail.com,Lexington ,TX ,"Lexington , TX ",30.413,-97.0112,(979) 446-3445,Chris ,Non-Union,4
+54Cap,Executed,Capital Line Electric,Completed ,Yes,Paul Krutz,Paul.Kurtz@capitalelectric.com,Riverside,MO,"Riverside, MO",39.1775,-94.613,(816) 215-6635,Flash,Union,4.666666667
+55Cen,Executed,Central Powerline LTD,Completed,No,Cole Callen,admin@centralpowerline.ca,Bobcaygeon,Canada ,"Bobcaygeon, Canada ",44.5464,-78.542,(705) 879-3512,Kyle ,Non-Union,3
+55E ,,5E Powerline,Completed,Yes,Nick England ,5Epowerline@gmail.com,Duncan ,OK,"Duncan , OK",34.5023,-97.9578,(580) 475-8498,Josh,Non-Union,3
+56CHU,Executed,CHU-CON INC,Unfinished,Yes,Chris Sharpe ,chris.sharpe@chu-coninc.com ,Middlesboro,KY,"Middlesboro, KY",36.6084,-83.7166,(606) 269-1670,Nathan/Trevor,Non-Union,0
+57CHU,Executed,CHU-CON INC,Unfinished,Yes,Chris Sharpe ,chris.sharpe@chu-coninc.com ,Middlesboro,KY,"Middlesboro, KY",36.6084,-83.7166,(606) 269-1670,Nathan/Trevor,Veg,0
+58CKW,,CKW,Unfinished,N/A,Gary Bates,gblineman@gmail.com,Detroit,MI,"Detroit, MI",42.3314,-83.0458,(517) 812-4509,Trevor,Veg,0
+59CKW,,CKW,Unfinished,N/A,Bobby Waters,,Detroit,MI,"Detroit, MI",42.3314,-83.0458,,Trevor,Veg,0
+60Com,,Compass Creek,Unfinished,N/A,Donna McCluskey ,donnam@compass-creek.com ,Young Harris,GA ,"Young Harris, GA ",34.9331,-83.8473,(706) 835-5441,Trevor,Veg,0
+61Com,,Compass Creek,Unfinished,N/A,Dillon Canady,dcanady@compass-creek.com,Young Harris,GA ,"Young Harris, GA ",34.9331,-83.8473,(910) 389- 7429,Trevor,Veg,0
+62Con,,Connect Atlantic Utilities ,Completed ,No,John Mackinnon,jmackinnon@causltd.com,Nova Scotia ,Canada ,"Nova Scotia , Canada ",45.2538,-63.293,(902) 471-1205,Nathan ,Union,0
+63Cop,Executed,Copper and cable,Completed ,No,Mike Koonce ,mike@copperandcable.com,,CT,", CT",,,(910) 986-9791,Randall,Union,4
+64Cop,Executed,Copper and cable,Completed ,No,Mike Koonce ,mike@copperandcable.com,Charlette,NC,"Charlette, NC",35.2271,-80.8431,(910) 986-9791,Randall,Union,4
+65Cor,,Corbitt Power,Completed,Yes,Shannon Corbitt,shannon@corbittpower.com,Selma,AL,"Selma, AL",32.4074,-87.0211,(256) 572-7203,Randall/Kyle ,Non-Union,3.5
+66Cor,,Corbitt Power,Completed,Yes,Shannon Corbitt,shannon@corbittpower.com,Shelbyville,TN,"Shelbyville, TN",35.4834,-86.4603,(256) 572-7203,Randall/Kyle ,Non-Union,4
+67 U,Executed,7 Utility Services,Completed ,Yes,Dennis Obregon,Dennis.obregon@sevenutilityserices.com,Sherrills Ford,NC,"Sherrills Ford, NC",35.6168,-81.0282,(760) 881-5779,Chris/Izabella,Union,3
+67Cor,Executed,Cornerstone ,Completed,Yes,Tristen Nuttall,ces.powerline@yahoo.com,Atoka ,OK,"Atoka , OK",34.3859,-96.1283,(580) 239-2901,Nathan/Kerney,Non-Union,0
+68Cov,Executed,Covin,Completed,No,Jimmy Covin,covinproducellc@gmail.com,Hernado ,FL,"Hernado , FL",28.8999,-82.3745,(954) 394-5237,Chris,Non-Union,2
+69C-p,,C-phase,Unfinished,N/A,Gary Whaley,Gwhaley@C-phase.com,Rockingham,NC,"Rockingham, NC",34.9393,-79.7739,(252) 521-3537,Trevor,Union,0
+70Cur,,Current Utility Services LLC,Unfinished,No,Austin Blagg,ablagg@currentutilityservicesllc.com,Scotland,TX ,"Scotland, TX ",33.6623,-98.4757,(940) 733-8270,Kyle,Non-Union,0
+71D&T,,D&T Power,Completed ,Yes,Dustin Streich,dstreich@dandtpower.com,Rockford,MI,"Rockford, MI",43.12,-85.56,(989) 600-7437,Kyle,Union,3
+72Dan,,Danella Construction ,Completed ,Yes,Frank Renner,frenner@danella.com,Plymouth,PA,"Plymouth, PA",41.2404,-75.9446,(610) 585-7656,Izabella,Union,4
+73Dar,Signed Not Exe,Dark Horse ,Completed,Yes,James Diaz-Barriga ,james.db@dheltn.com,Sunbright ,TN,"Sunbright , TN",36.2456,-84.6664,(615) 389-9295,Josh,Non-Union,3
+74Del,,Delta Daylighting,Completed,Yes,Daniel Figueroa,dfigueroa@deltadaylighting.com,Houston ,TX,"Houston , TX",29.7604,-95.3698,(832) 444-7204,Brian,HVAC,3
+75Del,Signed Not Exe,Delta Services,Completed ,Yes,Justin Fackler,jfackler@deltaservicesllc.com,Louisville,KY,"Louisville, KY",38.2527,-85.7585,(812) 404-6086,Trevor,Union,0
+76Dic,,Dickson Tree Service,Unfinished,N/A,David Dickson,dicksontreeservice@outlook.com,Dickson ,TN,"Dickson , TN",36.077,-87.3878,(615) 584-7540,Trevor,DAT,0
+7731,,731 Tree Service,Unfinished,N/A,Derek Wood,pro731concrete@yahoo.com,,,", ",,,(731) 926-5297,Trevor,Veg,0
+77Dic,,Dickson Tree Service,Unfinished,N/A,David Dickson,dicksontreeservice@outlook.com,Dickson ,TN,"Dickson , TN",36.077,-87.3878,(615) 584-7540,Trevor,Veg,0
+78Div,Executed,Divergent Alliance ,Completed ,No,Matthew Moeller,storm@divergentalliance.com,Algonquin,IL,"Algonquin, IL",42.1656,-88.2942,(847) 812-3491,Trevor/Randall,Union,4
+79Div,Executed,Divergent Alliance ,Completed ,No,Joe Laxton,storm@divergentalliance.com,Algonquin,IL,"Algonquin, IL",42.1656,-88.2942,(315) 263-4776,Trevor/Randall,Union,4
+80Div,Executed,Diversified Utility Services ,Completed ,Yes,Brian Leavell,brian.leavell@dusllc.com,Morrow,GA,"Morrow, GA",33.5832,-84.3394, 678 878 6682,Brian,Union,0
+81Dj ,,Dj Power,Completed,Yes,Deon Jones ,djones@djpowerinc.com,Breham,TX ,"Breham, TX ",30.1669,-96.3977,(281) 253- 1641,Flash,Non-Union,4
+82Dj ,,Dj Power,Completed,Yes,Deon Jones ,djones@djpowerinc.com,Waco,TX ,"Waco, TX ",31.5493,-97.1467,(281) 253- 1641,Flash,Non-Union,4
+83Dom,,Dominant Power,Unfinished ,N/A,Brian Wright ,Dominantpower1@gmail.com,Pittsburgh,PA,"Pittsburgh, PA",40.4406,-79.9959,(814) 969-9149,Kyle,Union,3
+84Dou,,Double Diamond Utility ,Unfinished,,Ross Glover,rossglover@doublediamondutility.com,Tyler,TX,"Tyler, TX",32.3513,-95.3011,(903) 286-5183,Chris ,DAT,2.5
+85DRG,Executed,DRG,Completed,Yes,Charles Hartsfield,charlie@disasterresourcegroup.com,Baton Rogue,LA ,"Baton Rogue, LA ",30.4515,-91.1871,(417) 699-1824,Kyle,DAT,3
+86DRG,,DRG Logistics ,Completed,Yes,Charles Hartsfield,charlie@disasterresourcegroup.com,Baton Rogue,LA ,"Baton Rogue, LA ",30.4515,-91.1871,(417) 699-1824,Kyle,Logistics,3
+87DuB,Executed,DuBois Electric ,Completed ,Yes,Brian Dubios,Duboiselectricinc@gmail.com,Indian River ,MI,"Indian River , MI",45.412,-84.6136,(231) 425-0274,Chris/Randall,Union,2
+87Ut,,7Utility Services,Completed ,Yes,Dennis Obregon,Dennis.obregon@sevenutilityserices.com,Dallas,TX,"Dallas, TX",32.7767,-96.797,(760) 881-5779,Chris/Izabella,Union,2
+88Dyn,Executed,Dynamic Utility Solutions,Completed ,Yes,Joann Bauer,Jbauer@dynamic2016.com,Carol Springs,IL,"Carol Springs, IL",41.9125,-88.1348,(312) 351-0409,Kyle,Union,0
+89Eas,Executed,East Bay Electric,Unfinished,No,Mike Crim,mikecrim@att.net,Robertsdale,Al,"Robertsdale, Al",30.5538,-87.712,(251) 421-0033,Randall,Non-Union,4
+90Eas,Executed,East Coast Powerline ,Completed ,Yes,Kevin Shaffer,kevin.shaffer@eastcoastpowerline.com,Lapeer,MI,"Lapeer, MI",43.0514,-83.3188,(313) 790-1864,Kyle,Union,3
+91ECP,,ECPNL,Unfinished,Yes,Stacey Heath,sheath@ecpnl.com,Kingston,NC,"Kingston, NC",35.2627,-77.5816,(252) 521-3331,Kyle ,Non-Union,0
+92Edg,Redlines Returned,Edgar Electric,Completed ,Yes,Cole Pope,cole.pope@edgarelectricinc.com,Paragould,AR,"Paragould, AR",36.0584,-90.4973,(601) 572-0577 ,Izabella,Union,4
+93EEA,Executed,EEA,Completed ,No,Marc Dube,Marc.dube@eea.ca,ST-Jean ,Canada ,"ST-Jean , Canada ",45.291,-73.2502,(514) 972-8589,Kyle,Union,0
+94E-J,,E-J Electric T&D,Unfinished ,N/A,Brett Hurlburt,Bhurlburt@ej1899.com,Wallingford,CT,"Wallingford, CT",41.457,-72.8231,(315) 416-2126,Kyle,DAT,0
+95E-J,,E-J Electric T&D,Unfinished ,N/A,Brett Hurlburt,Bhurlburt@ej1899.com,Wallingford,CT,"Wallingford, CT",41.457,-72.8231,(315) 416-2126,Kyle,Union,0
+96Ele,,Elecnor Hawkeye,Unfinished,N/A,Tyler Gammie,tgammie@elecnor.es,Manchester,NY,"Manchester, NY",42.9695,-77.2302,(631) 447-3100,Izabella,Union,0
+97Ele,Executed,Electricom,Completed,Yes,Jeff Hilgenhold,jhilgenhold@ElectricomInc.com,Paoli ,IN,"Paoli , IN",38.5562,-86.4683,(812) 719-2425,Kyle ,Non-Union,5
+98Exc,Executed,Excursion Line Construction,Completed ,Yes,Greg  Vaughn,greg@excursionlineconstruction.com,London,KY,"London, KY",37.1289,-84.0833,(606) 224-9550,Randall/Trevor,Union,4
+99Exo,,Exoduse Energy,Completed,Yes,Dakota Greeson,dakota@exodusenergyok.com,Shawnee,OK,"Shawnee, OK",35.3273,-96.9253,(405) 229-4828,Chris,Non-Union,3
+9A1 ,Executed,A1 Utility ,Completed ,Yes,Troy Lyons,troy@a1utilitycontractor.com,Williamsburg,Ky,"Williamsburg, Ky",36.7434,-84.1597,(989) 324-8581,Nathan/Kyle,Union,3

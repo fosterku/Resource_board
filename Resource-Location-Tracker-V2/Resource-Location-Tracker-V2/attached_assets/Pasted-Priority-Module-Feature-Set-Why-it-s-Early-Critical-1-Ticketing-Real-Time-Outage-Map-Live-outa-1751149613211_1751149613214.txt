@@ -1,0 +1,39 @@
+Priority	Module / Feature Set	Why it’s Early-Critical
+1	Ticketing & Real-Time Outage Map
+• Live outage polygons/points with ETRs
+• Work-order lifecycle (New → Closed), bulk assignment, SLA timers	This is the situational “single pane of glass.” Everything else—crews, inventory, customer comms—hangs off tickets tied to map objects.
+2	Roster & Timesheet Hub
+• Crew import, drag-and-drop onto equipment
+• Mobile punch-in/out with GPS
+• Approval chain → export to payroll	Crews can’t be dispatched (or paid) without a vetted roster. Timesheets generate the data needed for billing and performance analytics.
+3	Damage-Assessment (Mobile) + Photo Upload
+• Offline-capable forms, GPS tagging, photo capture
+• Quick-pick damage codes	Feeds tickets with ground truth, shortens the time to accurate ETRs, and kicks off material orders.
+4	Rate Library & Invoice Generator
+• Contract-specific T&M tables
+• Auto-compile approved hours & materials into PDF/CSV	Converts operational data into cash flow—biggest ROI proof for leadership and contractors.
+5	Weather & Static Hazard Layers
+• NEXRAD, lightning, wind, flood warnings
+• FEMA floodplains, wildfire risk, tornado tracks	Gives dispatchers context for crew safety and customer messaging; easy Mapbox or Leaflet overlay.
+6	Inventory & Parts Management
+• Real-time stock counts, min/max alerts
+• Rapid order links to suppliers	Cuts idle crew time waiting for materials and controls storm costs.
+7	Staging-Site & Logistics Manager
+• Yard addresses, gate hours, fuel/light-tower status	Prevents on-site chaos; once rosters and parts exist, crews need organized yards.
+8	Safety & Compliance Toolkit
+• Digital JSA / tailboards
+• Fatigue alerts, PPE issuance logs	Required for OSHA/FERC/NERC audits; integrates naturally with roster and timesheet data.
+9	Mutual-Aid / Resource Exchange Portal	Adds resilience when internal resources are maxed out; APIs can piggy-back on existing ticket workflows.
+10	Customer & Public Outage Portal
+• ADA-compliant map widget
+• SMS/IVR notifications	Improves satisfaction and reduces call-center load, but relies on solid ticket & ETR data (#1-#3).
+11	Drone Ops & AI Image Analysis
+• Mission planning, flight logs
+• ML detection (broken poles, vegetation)	Big time-saver for hard-to-reach areas, but needs robust data pipeline and ops protocols in place.
+12	Predictive Analytics & Benchmarking
+• Machine-learning ETR forecasts
+• KPI dashboards (SAIDI/SAIFI, resource burn)	High strategic value, yet dependent on mature historical data from earlier modules.
+13	IoT & Sensor Network Integration	Future-forward; adds real-time asset health once the core platform is stable.
+14	Media / Government API & Reporting Suite
+• Press-briefing dashboard
+• Automatic regulatory filings	Relies on cleansed data from virtually every upstream module; best

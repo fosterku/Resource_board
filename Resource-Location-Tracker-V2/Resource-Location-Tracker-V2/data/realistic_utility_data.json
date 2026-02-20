@@ -1,0 +1,145 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Florida Power & Light Company",
+        "CUSTOMERS": 5100000,
+        "STATE": "FL"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.6349, 24.5210], [-80.0313, 24.5210], [-80.0313, 30.9833], [-87.6349, 30.9833], [-87.6349, 24.5210]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Duke Energy Carolinas",
+        "CUSTOMERS": 2800000,
+        "STATE": "NC"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-84.3219, 32.0339], [-75.4609, 32.0339], [-75.4609, 39.7223], [-84.3219, 39.7223], [-84.3219, 32.0339]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Georgia Power Company",
+        "CUSTOMERS": 2600000,
+        "STATE": "GA"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-85.6051, 30.3572], [-80.8394, 30.3572], [-80.8394, 35.0008], [-85.6051, 35.0008], [-85.6051, 30.3572]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Commonwealth Edison Company",
+        "CUSTOMERS": 4000000,
+        "STATE": "IL"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-88.2970, 41.6446], [-87.5248, 41.6446], [-87.5248, 42.5083], [-88.2970, 42.5083], [-88.2970, 41.6446]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Pacific Gas and Electric Company",
+        "CUSTOMERS": 5400000,
+        "STATE": "CA"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-124.4096, 32.5343], [-114.1319, 32.5343], [-114.1319, 42.0095], [-124.4096, 42.0095], [-124.4096, 32.5343]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Southern California Edison Company",
+        "CUSTOMERS": 5000000,
+        "STATE": "CA"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-119.3107, 33.7038], [-116.8393, 33.7038], [-116.8393, 35.7782], [-119.3107, 35.7782], [-119.3107, 33.7038]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Consolidated Edison Company of New York",
+        "CUSTOMERS": 3400000,
+        "STATE": "NY"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-74.2591, 40.4774], [-73.7004, 40.4774], [-73.7004, 40.9176], [-74.2591, 40.9176], [-74.2591, 40.4774]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Xcel Energy Inc",
+        "CUSTOMERS": 3600000,
+        "STATE": "CO"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-109.0452, 36.9924], [-102.0417, 36.9924], [-102.0417, 41.0006], [-109.0452, 41.0006], [-109.0452, 36.9924]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Public Service Electric and Gas Company",
+        "CUSTOMERS": 2200000,
+        "STATE": "NJ"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-75.5594, 39.3558], [-73.8937, 39.3558], [-73.8937, 41.3574], [-75.5594, 41.3574], [-75.5594, 39.3558]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Potomac Electric Power Company",
+        "CUSTOMERS": 860000,
+        "STATE": "DC"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-77.1198, 38.7916], [-76.9094, 38.7916], [-76.9094, 39.0458], [-77.1198, 39.0458], [-77.1198, 38.7916]
+        ]]
+      }
+    }
+  ]
+}

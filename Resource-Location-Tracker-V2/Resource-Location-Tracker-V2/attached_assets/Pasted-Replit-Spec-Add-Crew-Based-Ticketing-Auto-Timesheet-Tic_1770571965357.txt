@@ -1,0 +1,419 @@
+Replit Spec: Add Crew-Based Ticketing + Auto Timesheet Ticket Entries
+Goal
+
+Add a Ticketing module to the existing Utility Storm Response Management System.
+
+Tickets must:
+
+Be created under a Storm Session
+
+Have a location (address text + lat/lon; optional feeder/circuit fields)
+
+Be assigned to a specific Crew (not just a company)
+
+Send a notification to the crew lead (in-app + optional SMS)
+
+Require the crew to accept the assignment
+
+Allow the crew to view details and update ticket statuses (work lifecycle)
+
+Automatically add accepted/ worked tickets into the crew’s daily timesheet (one timesheet per crew per day, nested under contractor/company), including copying ticket location into each ticket timesheet entry.
+
+Non-Goals (keep it simple)
+
+No deep OMS integration in MVP
+
+No GPS tracking
+
+No complex scheduling/route optimization
+
+No fancy UI; table-first, fast, functional
+
+Data Model Changes (Postgres + Drizzle)
+1) Issue Catalog
+
+Create issue_types table (known issues).
+
+issue_types
+
+id (pk)
+
+name (text, required)
+
+code (text, unique, required)
+
+default_priority (text enum: P1/P2/P3, required)
+
+default_required_crew_type (text, nullable)
+
+default_required_equipment (jsonb or text, nullable)
+
+closeout_checklist (jsonb, nullable)
+
+is_active (boolean default true)
+
+created_at, updated_at
+
+2) Tickets
+
+Create tickets table.
+
+tickets
+
+id (pk)
+
+session_id (fk -> storm_sessions, required)
+
+company_id (fk -> companies/contractors, nullable until assigned)
+
+issue_type_id (fk -> issue_types, required)
+
+external_ref (text, nullable) // OMS ref if provided
+
+title (text, nullable)
+
+description (text, nullable)
+
+priority (text enum: P1/P2/P3, required)
+
+status (text enum; required)
+
+CREATED, ASSIGNED, ACCEPTED, ENROUTE, ON_SITE, WORKING, BLOCKED, COMPLETED, CLOSED, CANCELLED
+
+address_text (text, nullable)
+
+lat (numeric/float, nullable)
+
+lon (numeric/float, nullable)
+
+feeder (text, nullable)
+
+circuit (text, nullable)
+
+safety_flags (jsonb, nullable)
+
+created_by_user_id (fk -> users, required)
+
+created_at, updated_at
+
+closed_at (timestamp, nullable)
+
+Indexes:
+
+(session_id)
+
+(company_id)
+
+(status)
+
+(external_ref)
+
+3) Ticket Assignments (crew acceptance required)
+
+Create ticket_assignments table. Only one active assignment at a time.
+
+ticket_assignments
+
+id (pk)
+
+ticket_id (fk -> tickets, required)
+
+company_id (fk -> companies, required)
+
+crew_id (fk -> crews/roster_crews, required)
+
+status (enum: PENDING_ACCEPT, ACCEPTED, REJECTED, CANCELLED, REASSIGNED)
+
+assigned_by_user_id (fk -> users, required)
+
+assigned_at (timestamp required)
+
+responded_at (timestamp nullable)
+
+response_note (text nullable)
+
+is_active (boolean default true)
+
+Constraints:
+
+Only one active assignment per ticket: unique(ticket_id) where is_active=true (implement via partial unique index if supported or enforce in code)
+
+4) Ticket Status Events (audit + timeline)
+
+Create ticket_status_events
+
+ticket_status_events
+
+id
+
+ticket_id
+
+old_status
+
+new_status
+
+changed_by_user_id
+
+changed_at
+
+note (text nullable)
+
+5) Ticket Files (Object Storage)
+
+Create ticket_files
+
+ticket_files
+
+id
+
+ticket_id
+
+file_key
+
+original_filename
+
+mime_type
+
+uploaded_by_user_id
+
+uploaded_at
+
+category (text nullable)
+
+6) Work Segments (to auto-generate timesheet ticket rows)
+
+Create ticket_work_segments
+
+ticket_work_segments
+
+id
+
+ticket_id
+
+session_id
+
+company_id
+
+crew_id
+
+started_at (timestamp required)
+
+ended_at (timestamp nullable)
+
+created_by_user_id
+
+created_at
+
+Constraints:
+
+Prevent multiple open segments for same ticket+crew: enforce in code (and optionally unique partial index where ended_at is null)
+
+Timesheets: Add Line Items That Can Be Auto-Generated From Tickets
+
+Current behavior: 1 timesheet record per crew per day, nested under contractor/company.
+
+7) Timesheet Entries (line items)
+
+Add a timesheet_entries table to represent rows.
+
+timesheet_entries
+
+id
+
+timesheet_id (fk -> timesheets, required)
+
+entry_type (enum: TICKET, MANUAL) required
+
+ticket_id (fk -> tickets, nullable; required if entry_type=TICKET)
+
+issue_type_name (text snapshot, nullable)
+
+external_ref (text snapshot, nullable)
+
+hours_regular (numeric, default 0)
+
+hours_ot (numeric, default 0)
+
+notes (text nullable)
+
+Location snapshot fields (copy from ticket when created):
+
+work_address_text (text nullable)
+
+work_lat (numeric nullable)
+
+work_lon (numeric nullable)
+
+work_feeder (text nullable)
+
+work_circuit (text nullable)
+
+Constraints:
+
+unique(timesheet_id, ticket_id) where ticket_id is not null (prevent duplicates)
+
+RBAC / Security
+
+Roles: ADMIN, MANAGER, CONTRACTOR, UTILITY (already implemented).
+
+Ticket Access Rules
+
+MANAGER: full access
+
+UTILITY: read access only to tickets where ticket.company_id is in granted companies (and within sessions they can see)
+
+CONTRACTOR: access only to tickets assigned to their company; crew actions restricted to assigned crew
+
+ADMIN: no ticket access
+
+Implement helper functions:
+
+ensureTicketAccess(user, ticketId)
+
+ensureTicketCrewAccess(user, ticketId) // must be crew lead / crew member of active assignment to accept/update status
+
+ensureSessionAccess(user, sessionId)
+
+Keep “404-before-403”.
+
+Ticket Workflow Rules
+Assignment
+
+Ticket can exist unassigned (CREATED)
+
+Assigning creates a ticket_assignments row with status=PENDING_ACCEPT and sets ticket.status=ASSIGNED, ticket.company_id=assigned company
+
+Crew must accept before they can start work
+
+Crew acceptance
+
+Accept: assignment.status -> ACCEPTED; ticket.status -> ACCEPTED
+
+Reject: assignment.status -> REJECTED; ticket remains ASSIGNED or returns to CREATED (choose: keep ticket.status=ASSIGNED but show “needs reassignment”)
+
+Status updates + segments
+
+When crew updates ticket status:
+
+If new status enters “working state” (ON_SITE or WORKING):
+
+Create a new ticket_work_segments row if none open for this ticket+crew
+
+If new status exits working state (COMPLETED or BLOCKED or CANCELLED):
+
+Close the open segment (ended_at=now)
+
+Working states for MVP:
+
+Start: WORKING (or ON_SITE)
+
+Stop: COMPLETED (and optionally BLOCKED)
+
+Notifications
+In-app notifications (required)
+
+Create notifications table if not already present:
+
+id, user_id, type, entity_type, entity_id, title, body, created_at, read_at
+
+When assignment is created:
+
+Notify crew lead user (derived from crew record: crew_lead_user_id)
+
+Optional: SMS notification via existing texting provider if available.
+
+Auto-add Tickets to Daily Timesheets
+Behavior
+
+For a given crew/day timesheet:
+
+Find all ticket_work_segments overlapping that day for that crew + session
+
+Group by ticket_id and calculate overlap duration inside the day window
+
+Upsert timesheet_entries rows (entry_type=TICKET) for each ticket_id
+
+Copy ticket location into timesheet entry snapshot fields
+
+Default all hours to regular (OT can be edited manually)
+
+When to run
+
+On timesheet page load (recommended)
+
+Also run again on submit (to catch last-minute updates)
+
+API
+
+Add:
+
+POST /api/timesheets/:timesheetId/auto-from-tickets
+
+POST /api/timesheets/:timesheetId/submit (calls auto-from-tickets then locks)
+
+UI Changes (React + shadcn/ui + tables)
+A) Session Detail: Tickets Tab
+
+Table: tickets in session (sortable, filter by status/priority/company/crew)
+
+Buttons: Create Ticket, Import Tickets (later), Export Excel/CSV
+
+B) Ticket Detail Page
+
+Ticket fields + location mini-map
+
+Assignment card: assigned crew/company, accept/reject if pending
+
+Status controls: buttons for ENROUTE / ON_SITE / WORKING / BLOCKED / COMPLETED
+
+Attachments section: upload/view
+
+Status timeline section (from ticket_status_events)
+
+C) Crew “My Tickets”
+
+Shows tickets assigned to crews where current user is crew_lead_user_id (or crew member)
+
+Filters: Pending acceptance, Active, Completed
+
+D) Timesheet Page
+
+Auto-generated section “From Tickets Worked Today”
+
+Each row includes Ticket ID + Issue Type + Location (address + lat/lon)
+
+Allow edits to hours regular/OT
+
+Prevent duplicate ticket rows
+
+Exports
+
+Add Excel/CSV exports:
+
+Tickets export per session (include crew, company, status, priority, location, external_ref)
+
+Timesheet export should include ticket location snapshot fields for analysis
+
+Implementation Checklist (Order)
+
+Add tables + migrations (issue_types, tickets, ticket_assignments, ticket_status_events, ticket_files, ticket_work_segments, timesheet_entries, notifications if missing)
+
+Add API routes for ticket CRUD + assignment + accept/reject + status changes + file upload
+
+Implement segment open/close logic in status update route
+
+Implement timesheet auto-from-tickets endpoint + dedupe constraint
+
+Build UI: Session Tickets Tab, Ticket Detail, My Tickets, Timesheet auto section
+
+Add exports
+
+Notes
+
+Do not generate or insert fake/sample data.
+
+Use existing audit logging patterns for tickets + assignments + status events.
+
+All file uploads must have clear error handling and show exact reasons for failures.
+
+Keep map marker visibility high; ticket location should show clearly on ticket detail.

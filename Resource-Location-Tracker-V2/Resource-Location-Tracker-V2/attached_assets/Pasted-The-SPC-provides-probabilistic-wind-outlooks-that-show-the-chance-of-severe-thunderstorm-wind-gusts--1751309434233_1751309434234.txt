@@ -1,0 +1,23 @@
+The SPC provides probabilistic wind outlooks that show the chance of severe thunderstorm wind gusts (defined as 58 mph or 50 knots or greater) occurring within 25 miles of any point in a given area. These are presented as percentages on the maps.
+
+Here's how to interpret them and filter out the lowest threat:
+
+Probabilistic Wind Outlooks (e.g., 5%, 15%, 30%, 45%, 60%): These percentages directly indicate the likelihood of severe winds.
+
+5% probability: This is often the lowest category shown on the probabilistic wind maps. If you want to exclude the lowest wind threat, you would typically filter out areas with a 5% probability.
+
+Higher Probabilities (15%, 30%, 45%, 60%): These indicate an increasing likelihood of severe winds. Focusing on these higher percentages would give you areas with a more substantial threat.
+
+"Significant Wind" (Hatched Areas): This is a crucial distinction for excluding lower threats and focusing on truly damaging winds.
+
+A hatched area on the probabilistic wind outlook map signifies a 10% or greater probability of very damaging winds (75 mph or 65 knots or greater) within 25 miles of a point. These are winds capable of causing more widespread or severe damage.
+
+If you're looking to exclude the lowest wind threat and focus on areas with the potential for significant damage, the hatched areas are what you'd want to prioritize in your coding logic. They represent a higher confidence in more intense wind events.
+
+Therefore, when coding to identify areas with potential for damaging winds while excluding the lowest threat, you would:
+
+Access the specific "Probabilistic Wind Outlook" layer from the SPC map services (e.g., Day 1 Probabilistic Wind Outlook, often Layer ID 5 or similar).
+
+Filter the data based on the probability values. You could set a threshold, for example, to only include areas with a 15% probability or higher.
+
+Additionally, look for a field indicating "significant" wind potential (the hatched areas). This would allow you to specifically target regions where winds of 75 mph or greater are a concern, effectively excluding less impactful severe wind threats.

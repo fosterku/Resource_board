@@ -1,0 +1,404 @@
+Replit Build Prompt — Utility Storm Response Module
+
+You are an expert full‑stack engineer. Extend an existing React + TypeScript + Leaflet app with an Express + PostgreSQL (Drizzle ORM) backend. Implement a new Utility Storm Response Management section that is session‑scoped, RBAC‑secured, and audit‑logged. Only real data is used; never generate fake records. All records must be retained (no hard deletes).
+
+Tech & Constraints
+
+Frontend: React 18 + TypeScript + Vite, Tailwind + shadcn/ui, React Router. Reuse existing map module.
+
+Backend: Node 20, Express 4, Drizzle ORM (PostgreSQL), Zod validation, Multer for uploads.
+
+Auth: Provide two options (toggle by env USE_SUPABASE_AUTH):
+
+Supabase Auth (recommended): RLS for table‑level security; JWT from Supabase.
+
+Local Auth: bcrypt, JWT, refresh tokens, RBAC middleware.
+
+Storage: PostgreSQL for data; S3‑compatible bucket (or Supabase Storage) for receipts and file uploads.
+
+Exports: Excel (xlsx), CSV, PDF (pdfkit). All exports must be deterministic and auditable.
+
+Backups: Nightly DB snapshot job + object storage lifecycle policy.
+
+Environment Variables
+
+Create .env (and .env.example):
+
+# General
+NODE_ENV=development
+PORT=3000
+CLIENT_URL=http://localhost:5173
+
+
+# Database
+DATABASE_URL=postgres://user:pass@host:5432/db
+
+
+# Auth
+USE_SUPABASE_AUTH=true
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+SUPABASE_JWT_SECRET=
+JWT_ACCESS_SECRET=dev_access_secret
+JWT_REFRESH_SECRET=dev_refresh_secret
+
+
+# Storage
+FILES_BUCKET_URL=
+FILES_BUCKET_KEY=
+FILES_BUCKET_SECRET=
+FILES_BUCKET_REGION=
+
+
+# Mapbox (reuse existing)
+MAPBOX_TOKEN=
+Folder Structure
+root/
+  apps/
+    web/           # React app
+    api/           # Express API
+  packages/
+    db/            # Drizzle schema + migrations + seed
+    ui/            # shared UI (optional)
+  .env
+  .env.example
+Packages to Install
+
+Backend: express cors zod multer jsonwebtoken bcrypt pdfkit @aws-sdk/client-s3 drizzle-orm pg pg-native uuid dayjs
+Frontend: react-router-dom axios zod @tanstack/react-query @radix-ui/react-dropdown-menu react-hook-form xlsx
+Dev: tsx typescript ts-node nodemon drizzle-kit
+
+NPM scripts (api):
+
+"dev": "nodemon --exec tsx src/index.ts",
+"migrate": "drizzle-kit migrate --config=drizzle.config.ts",
+"generate": "drizzle-kit generate --config=drizzle.config.ts",
+"studio": "drizzle-kit studio --config=drizzle.config.ts"
+Database (Drizzle) — Tables
+
+All tables include: created_at TIMESTAMP, updated_at TIMESTAMP, soft delete deleted_at NULL, and are covered by audit_logs.
+
+companies(id UUID PK, name TEXT UNIQUE NOT NULL, ...)
+
+
+sessions(id UUID PK, name TEXT, start_date DATE, end_date DATE, status TEXT)
+session_contractors(id UUID PK, session_id FK, company_id FK, invited_at TIMESTAMP, joined_at TIMESTAMP, role_hint TEXT)
+
+
+users(id UUID PK, email TEXT UNIQUE, password_hash TEXT NULL, role TEXT CHECK IN ('CONTRACTOR','MANAGER','UTILITY'), company_id UUID NULL)
+user_sessions(id UUID PK, user_id FK, session_id FK, role_scope TEXT) -- explicit per‑session grant
+
+
+rosters(id UUID PK, session_id FK, company_id FK, status TEXT CHECK IN ('DRAFT','SUBMITTED','APPROVED','LOCKED'), locked_by UUID NULL, locked_at TIMESTAMP NULL, version INT)
+crews(id UUID PK, roster_id FK, crew_name TEXT, crew_lead TEXT, work_area TEXT)
+roster_personnel(id UUID PK, roster_id FK, crew_id FK, name TEXT, role TEXT, classification TEXT, rate_code TEXT, st_ot_pt_eligibility TEXT, notes TEXT)
+roster_equipment(id UUID PK, roster_id FK, crew_id FK, type TEXT, classification TEXT, rate_code TEXT, ownership TEXT, notes TEXT)
+
+
+timesheets(id UUID PK, session_id FK, company_id FK, crew_id FK, date DATE, work_type TEXT CHECK IN ('MOBILIZED','WORKING','STANDBY','DEMOBILIZED'), ticket_no TEXT, work_area TEXT, meals JSONB, lodging JSONB, notes TEXT, status TEXT CHECK IN ('DRAFT','SUBMITTED','APPROVED','SIGNED'), submitted_by UUID, approved_by UUID, utility_signed_by UUID, version INT)
+timesheet_lines(id UUID PK, timesheet_id FK, subject_type TEXT CHECK IN ('PERSONNEL','EQUIPMENT'), subject_ref_id UUID, hours_st NUMERIC(6,2), hours_ot NUMERIC(6,2), hours_pt NUMERIC(6,2), rate_code TEXT)
+
+
+expenses(id UUID PK, session_id FK, company_id FK, date DATE, category TEXT, amount_cents BIGINT, currency TEXT DEFAULT 'USD', notes TEXT, status TEXT CHECK IN ('SUBMITTED','APPROVED','REJECTED'), submitted_by UUID, approved_by UUID)
+expense_files(id UUID PK, expense_id FK, file_key TEXT, original_name TEXT, mime_type TEXT, size INT)
+
+
+fte_reports(id UUID PK, company_id FK, session_id UUID NULL, date DATE, payload_json JSONB, submitted_by UUID)
+
+
+company_locations(id UUID PK, company_id FK, label TEXT, address TEXT, lat NUMERIC, lon NUMERIC, type_tag TEXT, active_flag BOOLEAN, effective_from DATE, effective_to DATE NULL, notes TEXT, source TEXT)
+
+
+rate_tables(id UUID PK, session_id UUID NULL, scope TEXT CHECK IN ('GLOBAL','SESSION'), subject TEXT CHECK IN ('PERSONNEL','EQUIPMENT'), classification TEXT, work_type TEXT, hours_type TEXT CHECK IN ('ST','OT','PT'), rate_cents BIGINT)
+
+
+invoices(id UUID PK, session_id FK, company_id FK, status TEXT CHECK IN ('DRAFT','ISSUED','PAID'), issued_at TIMESTAMP, due_at TIMESTAMP, totals_json JSONB)
+invoice_lines(id UUID PK, invoice_id FK, source TEXT CHECK IN ('TIMESHEET','EXPENSE'), source_id UUID, description TEXT, qty NUMERIC(10,2), unit_rate_cents BIGINT, amount_cents BIGINT)
+
+
+audit_logs(id UUID PK, actor_user_id UUID, entity TEXT, entity_id UUID, action TEXT, before_json JSONB, after_json JSONB, created_at TIMESTAMP)
+
+Indices:
+
+(session_id, company_id) on all session‑scoped tables
+
+(company_id, active_flag) on locations
+
+(subject, classification, work_type, hours_type) on rate_tables
+
+(entity, entity_id, created_at) on audit_logs
+
+CSV Intake Contracts (You will attach CSVs)
+
+Roster CSV → parsed into crews, roster_personnel, roster_equipment.
+
+Timesheet CSV → parsed into timesheets + timesheet_lines.
+
+Create mapping configs under apps/api/src/import/config/:
+
+roster.config.ts  // column->field map, classification normalization, rate_code rules
+timesheet.config.ts
+
+Validation: Zod schemas reject/collect row‑level errors; successful rows import; errors return a downloadable CSV of rejects.
+
+API — High Level
+
+Base URL /api (CORS allow CLIENT_URL). All routes require JWT; RBAC middleware enforces role, company_id, and session grants.
+
+Auth & Identity
+
+POST /auth/login
+
+POST /auth/register-contractor (MANAGER) — seeds from companies and sends invite
+
+POST /auth/invite-utility (MANAGER) — grants per‑session read/approve
+
+GET /me — returns role, company, session grants
+
+Sessions
+
+POST /sessions (MANAGER)
+
+POST /sessions/:id/contractors (MANAGER)
+
+GET /sessions/:id/overview (MANAGER/UTILITY)
+
+Rosters
+
+POST /sessions/:id/rosters/upload (CONTRACTOR)
+
+PUT /rosters/:id (CONTRACTOR if unlocked)
+
+POST /rosters/:id/lock / POST /rosters/:id/unlock (MANAGER)
+
+GET /sessions/:id/rosters/master (MANAGER) — export
+
+Timesheets
+
+POST /sessions/:id/timesheets (CONTRACTOR)
+
+PUT /timesheets/:id (until approved)
+
+POST /timesheets/:id/approve (MANAGER)
+
+POST /timesheets/:id/utility-sign (UTILITY)
+
+GET /sessions/:id/timesheets/export
+
+Expenses
+
+POST /sessions/:id/expenses
+
+POST /expenses/:id/approve
+
+GET /sessions/:id/expenses/export
+
+FTE Reports (Contractor Portal)
+
+POST /contractors/me/fte
+
+GET /contractors/me/fte/history
+
+GET /sessions/:id/fte/summary (MANAGER)
+
+Company Locations (Contractor Portal)
+
+GET /contractors/me/locations
+
+POST /contractors/me/locations
+
+PUT /contractors/me/locations/:locId
+
+Rates & Invoicing
+
+POST /rates (MANAGER; global or session)
+
+POST /sessions/:id/invoices/generate (MANAGER)
+
+GET /invoices/:id.csv / GET /invoices/:id.pdf
+
+Reports
+
+GET /reports/hours (filters: session, company, crew, classification, work_type, date range)
+
+GET /reports/billing-export
+
+Security & RBAC Middleware
+
+Extract JWT → attach user, role, company_id.
+
+For session‑scoped routes: verify user_sessions contains (user_id, session_id) with appropriate role_scope (e.g., VIEW, APPROVE).
+
+Zod validate all inputs; return 422 with error map.
+
+All mutating endpoints: write to audit_logs with before_json/after_json.
+
+No hard deletes; use deleted_at with constraints preventing access to soft‑deleted rows except for managers with includeDeleted=true.
+
+Invoicing Logic
+
+Collect approved timesheets + approved expenses for (session_id, company_id).
+
+Resolve each timesheet_lines to rate_tables record by (subject, classification, work_type, hours_type); multiply by hours.
+
+Aggregate → create invoices + invoice_lines (line-level provenance retains source_id).
+
+Produce CSV (line‑items) and PDF (summary + detail tables). Store files to bucket and DB references.
+
+Frontend — Routes & Pages
+
+Contractor Portal
+
+/portal (dashboard): active sessions, quick actions
+
+/portal/fte (form + history table + export)
+
+/portal/locations (CRUD + mini map preview)
+
+/portal/rosters (upload, edit, lock status)
+
+/portal/timesheets (list + create + edit until approved)
+
+/portal/expenses (list + create + receipt preview)
+
+Manager
+
+/mgr/sessions (list/create)
+
+/mgr/sessions/:id/overview (cards: contractors, hours, expenses, approvals)
+
+/mgr/sessions/:id/rosters (master roster + export)
+
+/mgr/sessions/:id/timesheets (review/approve + export)
+
+/mgr/sessions/:id/expenses (review/approve + export)
+
+/mgr/sessions/:id/rates (global vs session tables)
+
+/mgr/sessions/:id/invoices (generate/list/download)
+
+Utility
+
+/util/sessions/:id/timesheets (review/sign)
+
+/util/sessions/:id/summary (read‑only KPI dashboard)
+
+Shared Components
+
+DataTable (sorting, filters, export buttons)
+
+FileUploader (drag&drop with row‑level error download)
+
+ExportButtons (CSV/XLSX/PDF)
+
+StatusBadges (DRAFT/SUBMITTED/APPROVED/SIGNED)
+
+Upload & Parsing Flow
+
+Use Multer for multipart/form-data.
+
+Parse CSV/XLSX with streaming (avoid memory blowups for large files).
+
+Zod validates each row; collect errors[]. On success, insert within a transaction; on failure, no partial writes unless --allowPartial query param is true (MANAGER only) and still return errors.csv.
+
+Exports
+
+Hours export: one row per timesheet_line resolved to rate + totals.
+
+Master roster export: flatten personnel/equipment with crew/session/company columns.
+
+Invoices: CSV line‑items + PDF summary.
+
+Always include: session_id, company_id, version, and provenance columns.
+
+Migrations & Seeds
+
+Drizzle migrations under packages/db/migrations.
+
+Seed script: create a MANAGER user, a few companies, and one empty session. Do not create dummy timesheets/rosters in production.
+
+Background Jobs
+
+Nightly db:backup job (pg_dump) stored to object storage with date prefix.
+
+Optional: re‑index materialized views for reporting.
+
+Acceptance Criteria (must pass)
+
+RBAC: Contractor can only access their company_id and granted session_id data. Utility can only see sessions granted. Manager sees all.
+
+Data retention: No hard deletes. Approvals create immutable version snapshots. Audit logs created for every mutation.
+
+Roster import: Given valid CSV, crews/personnel/equipment are created and visible; line edits allowed unless locked.
+
+Timesheets: Contractor can submit per crew/day; manager can approve; utility can sign. Exports work.
+
+Expenses: Submit with receipt; manager approve; included in invoice.
+
+FTE & Locations: Contractor can submit FTE and manage locations; map shows new locations.
+
+Invoicing: Rates resolve correctly; invoice files are generated and downloadable.
+
+Reports: Hours/billing exports include all required provenance fields and are accurate.
+
+Implementation Steps (Do in order)
+
+Scaffold folders and install deps for apps/api and apps/web.
+
+DB: Implement Drizzle schema + migrations; run migrate; implement seed.
+
+Auth: Wire Supabase Auth if USE_SUPABASE_AUTH=true; else local JWT.
+
+RBAC middleware: role + session grant checks; attach actor_user_id.
+
+Audit: request wrapper to auto‑write audit_logs on mutations.
+
+Uploads: Multer + S3 client; file key pattern: session/{sessionId}/{entity}/{id}/{filename}.
+
+Roster import: CSV parser + mapping; UI page + status toasts; lock/unlock.
+
+Timesheets: CRUD + approval + utility sign; line editor for ST/OT/PT.
+
+Expenses: CRUD + receipt viewer.
+
+FTE & Locations: contractor pages + APIs; map preview component.
+
+Rates & Invoicing: rate table editor; generator; CSV/PDF exports.
+
+Reports: hours + billing exports, filters; add download buttons.
+
+Backups: cron job / Replit task runner; document restore steps.
+
+Notes for the CSVs You Will Attach
+
+Place your Roster CSV and Timesheet CSV samples in /apps/api/samples/.
+
+Update apps/api/src/import/config/roster.config.ts and timesheet.config.ts with exact column names.
+
+Add any classification → rate_code normalization rules.
+
+Ensure timezone handling for dates (store as UTC; display in local UI).
+
+Definition of Done
+
+All endpoints behind auth; CORS locked to CLIENT_URL.
+
+Drizzle Studio shows all tables populated by real imports.
+
+End‑to‑end flows (contractor → manager → utility) demonstrated for one session.
+
+All exports open cleanly in Excel and match database totals within 0.00 tolerance.
+
+No 500s on malformed input; API returns structured 4xx with validation details.
+
+Stretch (Optional)
+
+Webhooks for utility signature events.
+
+Materialized views for faster dashboard KPIs.
+
+Signed URLs for file downloads with short TTL.
+
+Activity feed UI driven by audit_logs.
+
+Build it exactly as specified. Do not generate mock data in production. Retain every record and every version.

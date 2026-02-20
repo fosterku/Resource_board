@@ -1,0 +1,193 @@
+import requests
+import json
+import geopandas
+from shapely.geometry import shape, MultiPolygon, Polygon
+
+# --- SPC Outlook Functions (from previous response) ---
+
+def fetch_spc_outlook_geojson(day_num, risk_categories=['SLGT', 'ENH', 'MDT', 'HIGH']):
+    """
+    Fetches SPC Convective Outlooks in GeoJSON format for a specific day and risk categories.
+    """
+    base_url = "https://mapservices.weather.noaa.gov/vector/rest/services/outlooks/SPC_wx_outlks/MapServer/"
+    layer_ids = {
+        1: 1,  # Day 1 Categorical Outlook
+        2: 8,  # Day 2 Categorical Outlook
+        3: 15  # Day 3 Categorical Outlook
+    }
+
+    if day_num not in layer_ids:
+        print(f"Invalid day number specified: {day_num}. Must be 1, 2, or 3.")
+        return None
+
+    layer_id = layer_ids[day_num]
+    categories_str = "','".join(risk_categories)
+    where_clause = f"category IN ('{categories_str}')"
+
+    params = {
+        "where": where_clause,
+        "outFields": "*",
+        "f": "geojson"
+    }
+
+    try:
+        response = requests.get(f"{base_url}{layer_id}/query", params=params)
+        response.raise_for_status()
+        geojson_data = response.json()
+        return geojson_data
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching Day {day_num} data: {e}")
+        return None
+
+def combine_spc_outlooks(risk_categories=['SLGT', 'ENH', 'MDT', 'HIGH']):
+    """
+    Fetches and combines SPC Convective Outlooks for Day 1, Day 2, and Day 3
+    into a single GeoJSON FeatureCollection.
+    """
+    combined_features = []
+
+    for day in range(1, 4): # Loop for Day 1, Day 2, Day 3
+        print(f"Fetching Day {day} outlook...")
+        outlook_data = fetch_spc_outlook_geojson(day, risk_categories)
+        if outlook_data and outlook_data.get('features'):
+            for feature in outlook_data['features']:
+                feature['properties']['outlook_day'] = day
+                combined_features.append(feature)
+        else:
+            print(f"No features or error for Day {day}.")
+
+    combined_geojson = {
+        "type": "FeatureCollection",
+        "features": combined_features
+    }
+    return combined_geojson
+
+# --- New Functions for Electric Company Data and Intersection ---
+
+def fetch_electric_territories():
+    """
+    Fetches the electric retail service territories GeoJSON data.
+    """
+    api_url = "https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Retail_Service_Territories_gdb/FeatureServer/0/query"
+    params = {
+        "outFields": "NAME, Customers", # Request only necessary fields
+        "where": "1=1", # Get all features
+        "f": "geojson"
+    }
+    print("Fetching electric company service territories...")
+    try:
+        response = requests.get(api_url, params=params)
+        response.raise_for_status()
+        territories_geojson = response.json()
+        return territories_geojson
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching electric territories: {e}")
+        return None
+
+def find_intersecting_electric_companies(outlook_geojson, territories_geojson):
+    """
+    Finds electric companies whose territories intersect with the combined SPC outlook area.
+    Sorts them by number of customers, largest to smallest.
+
+    Args:
+        outlook_geojson (dict): The combined SPC outlook GeoJSON (FeatureCollection).
+        territories_geojson (dict): The electric territories GeoJSON (FeatureCollection).
+
+    Returns:
+        list: A list of dictionaries, each containing electric company info (name, customers, intersecting area).
+    """
+    if not outlook_geojson or not territories_geojson:
+        print("Missing outlook or territory data for intersection.")
+        return []
+
+    # Convert GeoJSON to GeoPandas GeoDataFrame for easy spatial operations
+    outlook_gdf = geopandas.GeoDataFrame.from_features(outlook_geojson['features'])
+    territories_gdf = geopandas.GeoDataFrame.from_features(territories_geojson['features'])
+
+    # Ensure valid geometries for intersection
+    # This step is crucial as some geometries might be invalid (e.g., self-intersecting)
+    outlook_gdf['geometry'] = outlook_gdf['geometry'].buffer(0) # Fixes invalid geometries
+    territories_gdf['geometry'] = territories_gdf['geometry'].buffer(0)
+
+    # Combine all outlook polygons into a single MultiPolygon for spatial query
+    # It's more efficient to union them first if you're interested in *any* overlap
+    # with the combined severe weather area.
+    print("Creating union of SPC outlook polygons...")
+    try:
+        # Filter out empty geometries if any
+        valid_outlook_geoms = [geom for geom in outlook_gdf.geometry if geom is not None and not geom.is_empty]
+        if not valid_outlook_geoms:
+            print("No valid SPC outlook geometries to combine.")
+            return []
+
+        # Use unary_union to combine all outlook polygons into one (or more) large polygon(s)
+        # This creates a single geometry representing the entire hazard area
+        combined_outlook_area = MultiPolygon([geom for geom in valid_outlook_geoms]).buffer(0).unary_union
+    except Exception as e:
+        print(f"Error creating combined outlook area: {e}")
+        return []
+
+    print("Performing spatial intersection...")
+    intersecting_companies = []
+
+    for idx, territory_row in territories_gdf.iterrows():
+        territory_geom = territory_row.geometry
+        company_name = territory_row.NAME
+        customers = territory_row.Customers # Assuming 'Customers' is the field name
+
+        # Check for intersection
+        if territory_geom and not territory_geom.is_empty and combined_outlook_area.intersects(territory_geom):
+            # Calculate the intersection area (optional, but useful)
+            try:
+                intersection_geom = combined_outlook_area.intersection(territory_geom)
+                # Ensure the intersection is a valid geometry and not empty
+                if not intersection_geom.is_empty:
+                    intersecting_companies.append({
+                        "name": company_name,
+                        "customers": customers if customers else 0, # Handle potential missing customer data
+                        "intersecting_area_sq_deg": intersection_geom.area # Area in square degrees
+                        # You could add intersection_geom.wkt or .geojson if you need the geometry
+                    })
+            except Exception as e:
+                print(f"Warning: Could not calculate intersection for {company_name}: {e}")
+                continue # Skip this territory if intersection fails
+
+    # Sort by number of customers, largest to smallest
+    sorted_companies = sorted(intersecting_companies, key=lambda x: x['customers'], reverse=True)
+
+    return sorted_companies
+
+# --- Main Execution ---
+if __name__ == "__main__":
+    desired_risks = ['SLGT', 'ENH', 'MDT', 'HIGH']
+
+    # 1. Get the combined SPC outlook data
+    combined_outlook_geojson = combine_spc_outlooks(risk_categories=desired_risks)
+
+    if not combined_outlook_geojson or not combined_outlook_geojson['features']:
+        print("No combined SPC outlook data found. Cannot proceed with intersection.")
+    else:
+        print(f"Combined SPC outlook has {len(combined_outlook_geojson['features'])} features.")
+
+        # 2. Get the electric service territories data
+        electric_territories_geojson = fetch_electric_territories()
+
+        if not electric_territories_geojson or not electric_territories_geojson['features']:
+            print("No electric service territories data found. Cannot proceed with intersection.")
+        else:
+            print(f"Electric territories data has {len(electric_territories_geojson['features'])} features.")
+
+            # 3. Find intersecting companies and sort them
+            companies_in_outlook = find_intersecting_electric_companies(
+                combined_outlook_geojson, electric_territories_geojson
+            )
+
+            print("\n--- Electric Companies within Combined SPC Outlook Area (Sorted by Customers) ---")
+            if companies_in_outlook:
+                for company in companies_in_outlook:
+                    print(f"  Name: {company['name']}")
+                    print(f"    Customers: {company['customers']:,}") # Format with commas
+                    print(f"    Intersecting Area (sq deg): {company['intersecting_area_sq_deg']:.4f}")
+                    print("-" * 30)
+            else:
+                print("No electric companies found within the combined outlook area.")

@@ -1,0 +1,102 @@
+import { pgTable, text, serial, integer, real, timestamp, jsonb } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
+
+export const resources = pgTable("resources", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  type: text("type").notNull(),
+  latitude: real("latitude").notNull(),
+  longitude: real("longitude").notNull(),
+  description: text("description"),
+  properties: jsonb("properties"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const analysisPoints = pgTable("analysis_points", {
+  id: serial("id").primaryKey(),
+  label: text("label").notNull(),
+  latitude: real("latitude").notNull(),
+  longitude: real("longitude").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const distanceCalculations = pgTable("distance_calculations", {
+  id: serial("id").primaryKey(),
+  analysisPointId: integer("analysis_point_id").references(() => analysisPoints.id),
+  resourceId: integer("resource_id").references(() => resources.id),
+  distance: real("distance").notNull(), // in miles
+  duration: integer("duration").notNull(), // in seconds
+  route: jsonb("route"), // route geometry
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const contractors = pgTable("contractors", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  company: text("company").notNull(),
+  email: text("email"),
+  phone: text("phone"),
+  category: text("category").notNull(), // Veg, Union, Non-Union, etc.
+  city: text("city"),
+  state: text("state"),
+  fullAddress: text("full_address"),
+  latitude: real("latitude"),
+  longitude: real("longitude"),
+  birdRep: text("bird_rep"),
+  pipefile: text("pipefile"), // Pipefile reference
+  avetta: text("avetta"), // AVETTA status
+  subRanking: text("sub_ranking"),
+  fteCountsPerLocation: text("fte_counts_per_location"),
+  pipefileUpdates: text("pipefile_updates"),
+  notes: text("notes"),
+  rating: integer("rating").default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const analysisJobs = pgTable("analysis_jobs", {
+  id: serial("id").primaryKey(),
+  filename: text("filename").notNull(),
+  status: text("status").notNull(), // 'processing', 'completed', 'failed'
+  resourceCount: integer("resource_count"),
+  error: text("error"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertResourceSchema = createInsertSchema(resources).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertContractorSchema = createInsertSchema(contractors).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertAnalysisPointSchema = createInsertSchema(analysisPoints).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertDistanceCalculationSchema = createInsertSchema(distanceCalculations).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertAnalysisJobSchema = createInsertSchema(analysisJobs).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type Resource = typeof resources.$inferSelect;
+export type InsertResource = z.infer<typeof insertResourceSchema>;
+export type Contractor = typeof contractors.$inferSelect;
+export type InsertContractor = z.infer<typeof insertContractorSchema>;
+export type AnalysisPoint = typeof analysisPoints.$inferSelect;
+export type InsertAnalysisPoint = z.infer<typeof insertAnalysisPointSchema>;
+export type DistanceCalculation = typeof distanceCalculations.$inferSelect;
+export type InsertDistanceCalculation = z.infer<typeof insertDistanceCalculationSchema>;
+export type AnalysisJob = typeof analysisJobs.$inferSelect;
+export type InsertAnalysisJob = z.infer<typeof insertAnalysisJobSchema>;

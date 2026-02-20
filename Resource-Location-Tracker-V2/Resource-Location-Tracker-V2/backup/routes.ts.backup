@@ -1,0 +1,582 @@
+import type { Express } from "express";
+import { createServer, type Server } from "http";
+import multer from "multer";
+import { storage } from "./storage";
+import { parseKMZFile, convertToResources } from "./services/kmzParser";
+import { parseCSVFile, parseExcelFile, convertCSVToResources, exportToExcel } from "./services/csvParser";
+import { routingService } from "./services/routingService";
+import { insertResourceSchema, insertAnalysisPointSchema, insertContractorSchema, distanceCalculations, analysisPoints, contractors } from "@shared/schema";
+import { db } from "./db";
+import { promises as fs } from 'fs';
+import path from 'path';
+
+const upload = multer({
+  dest: 'uploads/',
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ['.kmz', '.kml', '.csv', '.xlsx', '.xls'];
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, allowedTypes.includes(ext));
+  },
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+  },
+});
+
+export async function registerRoutes(app: Express): Promise<Server> {
+  // Upload file (KMZ, CSV, or Excel) and parse resources
+  app.post("/api/upload-file", upload.single('file'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+
+      const job = await storage.createAnalysisJob({
+        filename: req.file.originalname,
+        status: 'processing',
+        resourceCount: null,
+        error: null,
+      });
+
+      // Parse file in background
+      setImmediate(async () => {
+        try {
+          const ext = path.extname(req.file!.originalname).toLowerCase();
+          let resourceData;
+          let resources = [];
+
+          if (ext === '.kmz' || ext === '.kml') {
+            const placemarks = await parseKMZFile(req.file!.path);
+            resourceData = convertToResources(placemarks);
+            
+            // Clear existing resources
+            await storage.deleteAllResources();
+            
+            // Insert new resources
+            const resources = await Promise.all(
+              resourceData.map(data => storage.createResource(data))
+            );
+          } else if (ext === '.csv') {
+            const csvResources = await parseCSVFile(req.file!.path);
+            
+            // Clear existing resources
+            await storage.deleteAllResources();
+            
+            // Save to contractors table and create corresponding resources
+            for (const csvResource of csvResources) {
+              // Extract detailed information from parsed CSV (includes company, contact info, etc.)
+              const contractorData = {
+                name: csvResource.name,
+                company: (csvResource as any).company || csvResource.name,
+                email: (csvResource as any).email || '',
+                phone: (csvResource as any).phone || '',
+                category: csvResource.type || 'Unknown',
+                city: (csvResource as any).city || '',
+                state: (csvResource as any).state || '',
+                fullAddress: csvResource.address || '',
+                latitude: csvResource.latitude,
+                longitude: csvResource.longitude,
+                birdRep: (csvResource as any).birdRep || '',
+                pipefile: (csvResource as any).pipefile || '',
+                avetta: (csvResource as any).avetta || '',
+                subRanking: (csvResource as any).subRanking || '',
+                fteCountsPerLocation: (csvResource as any).fteCounts || '',
+                pipefileUpdates: (csvResource as any).pipefileUpdates || '',
+                notes: csvResource.description || ''
+              };
+              
+              const contractor = await storage.createContractor(contractorData);
+              
+              // Also create a resource entry for map display
+              const resourceData = {
+                name: contractorData.company,
+                type: csvResource.type || 'Contractor',
+                latitude: csvResource.latitude,
+                longitude: csvResource.longitude,
+                description: csvResource.description,
+                properties: { 
+                  address: csvResource.address,
+                  contractorId: contractor.id
+                }
+              };
+              
+              const resource = await storage.createResource(resourceData);
+              resources.push(resource);
+            }
+          } else if (ext === '.xlsx' || ext === '.xls') {
+            const excelResources = await parseExcelFile(req.file!.path);
+            resourceData = convertCSVToResources(excelResources);
+            
+            // Clear existing resources
+            await storage.deleteAllResources();
+            
+            // Insert new resources
+            resources = await Promise.all(
+              resourceData.map(data => storage.createResource(data))
+            );
+          } else {
+            throw new Error('Unsupported file type');
+          }
+
+          const finalResourceCount = resources.length;
+
+          await storage.updateAnalysisJob(job.id, {
+            status: 'completed',
+            resourceCount: finalResourceCount,
+          });
+
+          // Clean up uploaded file
+          await fs.unlink(req.file!.path);
+        } catch (error) {
+          console.error('KMZ parsing error:', error);
+          await storage.updateAnalysisJob(job.id, {
+            status: 'failed',
+            error: error instanceof Error ? error.message : 'Unknown error',
+          });
+        }
+      });
+
+      res.json({ jobId: job.id, message: "File uploaded successfully, processing..." });
+    } catch (error) {
+      console.error('Upload error:', error);
+      res.status(500).json({ message: "Failed to upload file" });
+    }
+  });
+
+  // Get job status
+  app.get("/api/jobs/:id", async (req, res) => {
+    try {
+      const jobId = parseInt(req.params.id);
+      const job = await storage.getAnalysisJob(jobId);
+      
+      if (!job) {
+        return res.status(404).json({ message: "Job not found" });
+      }
+
+      res.json(job);
+    } catch (error) {
+      console.error('Job status error:', error);
+      res.status(500).json({ message: "Failed to get job status" });
+    }
+  });
+
+  // Get all resources
+  app.get("/api/resources", async (req, res) => {
+    try {
+      const resources = await storage.getAllResources();
+      res.json(resources);
+    } catch (error) {
+      console.error('Get resources error:', error);
+      res.status(500).json({ message: "Failed to get resources" });
+    }
+  });
+
+  // Contractors endpoints
+  app.get("/api/contractors", async (req, res) => {
+    try {
+      const contractors = await storage.getAllContractors();
+      res.json(contractors);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/contractors", async (req, res) => {
+    try {
+      const contractorData = insertContractorSchema.parse(req.body);
+      const contractor = await storage.createContractor(contractorData);
+      res.status(201).json(contractor);
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/contractors/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const contractor = await storage.getContractor(id);
+      if (!contractor) {
+        return res.status(404).json({ error: "Contractor not found" });
+      }
+      res.json(contractor);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.put("/api/contractors/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updates = insertContractorSchema.partial().parse(req.body);
+      const contractor = await storage.updateContractor(id, updates);
+      if (!contractor) {
+        return res.status(404).json({ error: "Contractor not found" });
+      }
+      res.json(contractor);
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  app.delete("/api/contractors/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteContractor(id);
+      res.status(204).send();
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Create analysis point
+  app.post("/api/analysis-points", async (req, res) => {
+    try {
+      const validatedData = insertAnalysisPointSchema.parse(req.body);
+      const point = await storage.createAnalysisPoint(validatedData);
+      res.json(point);
+    } catch (error) {
+      console.error('Create analysis point error:', error);
+      res.status(400).json({ message: "Invalid analysis point data" });
+    }
+  });
+
+  // Get all analysis points
+  app.get("/api/analysis-points", async (req, res) => {
+    try {
+      const points = await storage.getAllAnalysisPoints();
+      res.json(points);
+    } catch (error) {
+      console.error('Get analysis points error:', error);
+      res.status(500).json({ message: "Failed to get analysis points" });
+    }
+  });
+
+  // Delete analysis point
+  app.delete("/api/analysis-points/:id", async (req, res) => {
+    try {
+      const pointId = parseInt(req.params.id);
+      await storage.deleteAnalysisPoint(pointId);
+      res.json({ message: "Analysis point deleted" });
+    } catch (error) {
+      console.error('Delete analysis point error:', error);
+      res.status(500).json({ message: "Failed to delete analysis point" });
+    }
+  });
+
+  // Calculate distances for a point
+  app.post("/api/calculate-distances/:pointId", async (req, res) => {
+    try {
+      const pointId = parseInt(req.params.pointId);
+      const { maxDistance } = req.body; // Optional max distance in miles
+      const points = await storage.getAllAnalysisPoints();
+      const resources = await storage.getAllResources();
+      
+      const point = points.find(p => p.id === pointId);
+      if (!point) {
+        return res.status(404).json({ message: "Analysis point not found" });
+      }
+
+      if (resources.length === 0) {
+        return res.status(400).json({ message: "No resources available for calculation" });
+      }
+
+      console.log(`Calculating distances for ${resources.length} resources from point: ${point.label}`);
+
+      // Clear existing calculations for this point to avoid duplicates
+      await storage.clearCalculationsForPoint(pointId);
+
+      // Calculate routes to all resources
+      const routes = await routingService.calculateBatchRoutes(point, resources);
+      
+      // Filter routes by distance if maxDistance is specified
+      const filteredRoutes = routes.map((route, index) => {
+        const distanceInMiles = route.distance / 1609.34; // Convert meters to miles
+        return {
+          route,
+          resource: resources[index],
+          distanceInMiles,
+          withinRange: maxDistance ? distanceInMiles <= maxDistance : true
+        };
+      }).filter(item => item.withinRange);
+
+      console.log(`${filteredRoutes.length} resources within range`);
+      
+      // Store calculations only for resources within range
+      const calculations = await Promise.all(
+        filteredRoutes.map(item => 
+          storage.createDistanceCalculation({
+            analysisPointId: pointId,
+            resourceId: item.resource.id,
+            distance: item.distanceInMiles,
+            duration: item.route.duration,
+            route: item.route.geometry,
+          })
+        )
+      );
+
+      res.json({ message: "Distances calculated successfully", count: calculations.length });
+    } catch (error) {
+      console.error('Calculate distances error:', error);
+      res.status(500).json({ message: "Failed to calculate distances" });
+    }
+  });
+
+  // Get calculations with resources for a point
+  app.get("/api/analysis-points/:pointId/calculations", async (req, res) => {
+    try {
+      const pointId = parseInt(req.params.pointId);
+      const { sort = 'distance' } = req.query;
+      
+      const calculations = await storage.getCalculationsWithResources(pointId);
+      
+      console.log(`Found ${calculations.length} calculations for point ${pointId}`);
+      if (calculations.length > 0) {
+        console.log('Sample calculation:', JSON.stringify(calculations[0], null, 2));
+      }
+      
+      // Sort results
+      calculations.sort((a: any, b: any) => {
+        switch (sort) {
+          case 'time':
+          case 'duration':
+            return a.duration - b.duration;
+          case 'name':
+            return a.resource.name.localeCompare(b.resource.name);
+          case 'distance':
+          default:
+            return a.distance - b.distance;
+        }
+      });
+
+      res.json(calculations);
+    } catch (error) {
+      console.error('Get calculations error:', error);
+      res.status(500).json({ message: "Failed to get calculations" });
+    }
+  });
+
+  // Export results
+  app.post("/api/export", async (req, res) => {
+    try {
+      const { format = 'json', pointId, options = {} } = req.body;
+      
+      if (!pointId) {
+        return res.status(400).json({ message: "Point ID required for export" });
+      }
+
+      const calculations = await storage.getCalculationsWithResources(pointId);
+      const selectedPoint = await storage.getAllAnalysisPoints();
+      const point = selectedPoint.find(p => p.id === pointId);
+      
+      switch (format) {
+        case 'csv':
+          const csvData = generateCSV(calculations, options);
+          res.setHeader('Content-Type', 'text/csv');
+          res.setHeader('Content-Disposition', `attachment; filename="distance_analysis_${point?.label.replace(/\s+/g, '_') || 'export'}.csv"`);
+          return res.send(csvData);
+        
+        case 'excel':
+          const excelData = calculations.map((calc: any) => {
+            const row: any = {
+              'Resource Name': calc.resource.name,
+              'Resource Type': calc.resource.type,
+            };
+            
+            if (options.includeDistances !== false) {
+              row['Distance (miles)'] = calc.distance.toFixed(2);
+            }
+            
+            if (options.includeTimes !== false) {
+              row['Travel Time'] = formatDuration(calc.duration);
+            }
+            
+            row['Latitude'] = calc.resource.latitude.toFixed(6);
+            row['Longitude'] = calc.resource.longitude.toFixed(6);
+            row['Description'] = calc.resource.description || '';
+            
+            return row;
+          });
+
+          const buffer = exportToExcel(excelData, 'distance_analysis');
+          
+          res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+          res.setHeader('Content-Disposition', `attachment; filename="distance_analysis_${point?.label.replace(/\s+/g, '_') || 'export'}.xlsx"`);
+          return res.send(buffer);
+        
+        case 'json':
+        default:
+          const jsonData: any = {
+            exportedAt: new Date().toISOString(),
+            pointId,
+            calculations: calculations.map((calc: any) => {
+              const item: any = {
+                resource: calc.resource,
+              };
+              
+              if (options.includeDistances !== false) {
+                item.distance = calc.distance;
+              }
+              
+              if (options.includeTimes !== false) {
+                item.duration = calc.duration;
+                item.travelTime = formatDuration(calc.duration);
+              }
+              
+              return item;
+            }),
+          };
+          
+          res.json(jsonData);
+      }
+    } catch (error) {
+      console.error('Export error:', error);
+      res.status(500).json({ message: "Failed to export data" });
+    }
+  });
+
+  // Export calculations for results table
+  app.get("/api/analysis-points/:pointId/calculations/export", async (req, res) => {
+    try {
+      const pointId = parseInt(req.params.pointId);
+      const format = req.query.format as string || 'csv';
+      const maxDistance = req.query.maxDistance ? parseFloat(req.query.maxDistance as string) : null;
+      const maxTime = req.query.maxTime ? parseFloat(req.query.maxTime as string) * 60 : null; // Convert minutes to seconds
+      
+      let calculations = await storage.getCalculationsWithResources(pointId);
+      
+      // Apply distance filter (same logic as Results Table)
+      if (maxDistance) {
+        calculations = calculations.filter((calc: any) => calc.distance <= maxDistance);
+      }
+      
+      // Apply time filter (same logic as Results Table)
+      if (maxTime) {
+        calculations = calculations.filter((calc: any) => calc.duration <= maxTime);
+      }
+      
+      // Get unique contractor IDs from the filtered calculations
+      const contractorIds = calculations
+        .map((calc: any) => calc.resource.properties?.contractorId)
+        .filter(id => id !== undefined);
+      
+      // Fetch only the contractors that are in the filtered analysis results
+      const allContractors = await storage.getAllContractors();
+      const relevantContractors = allContractors.filter(c => contractorIds.includes(c.id));
+      
+      // Create a map for quick contractor lookup
+      const contractorMap = new Map(relevantContractors.map(c => [c.id, c]));
+      
+      // Build export data with all contractor fields from database
+      const exportData = calculations.map((calc: any) => {
+        const contractorId = calc.resource.properties?.contractorId;
+        const contractor = contractorId ? contractorMap.get(contractorId) : null;
+        
+        return {
+          'Name': contractor?.name || calc.resource.name,
+          'Distance (miles)': calc.distance.toFixed(2),
+          'Drive Time': formatDuration(calc.duration),
+          'Company': contractor?.company || '',
+          'Category': contractor?.category || calc.resource.type,
+          'Pipefile': contractor?.pipefile || '',
+          'AVETTA': contractor?.avetta || '',
+          'City': contractor?.city || '',
+          'State': contractor?.state || '',
+          'Full Address': contractor?.fullAddress || '',
+          'Latitude': contractor?.latitude?.toFixed(6) || calc.resource.latitude.toFixed(6),
+          'Longitude': contractor?.longitude?.toFixed(6) || calc.resource.longitude.toFixed(6),
+          'Phone': contractor?.phone || '',
+          'Email': contractor?.email || '',
+          'BIRD REP': contractor?.birdRep || '',
+          'SUB Ranking': contractor?.subRanking || '',
+          'FTE Counts Per Location': contractor?.fteCountsPerLocation || '',
+          'Pipefile updates': contractor?.pipefileUpdates || '',
+          'Notes': contractor?.notes || '',
+        };
+      });
+      
+      if (format === 'excel') {
+        const buffer = exportToExcel(exportData, 'distance_analysis');
+        
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', 'attachment; filename="distance_analysis.xlsx"');
+        return res.send(buffer);
+      } else {
+        // CSV format - need to convert objects to CSV
+        const csvHeaders = Object.keys(exportData[0] || {});
+        const csvRows = exportData.map(row => 
+          csvHeaders.map(header => `"${(row as any)[header] || ''}"`).join(',')
+        );
+        const csv = [csvHeaders.join(','), ...csvRows].join('\n');
+        
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', 'attachment; filename="distance_analysis.csv"');
+        return res.send(csv);
+      }
+    } catch (error) {
+      console.error('Export calculations error:', error);
+      res.status(500).json({ message: "Failed to export calculations" });
+    }
+  });
+
+  // Clear all database data
+  app.post("/api/database/clear", async (req, res) => {
+    try {
+      await storage.deleteAllResources();
+      await db.delete(distanceCalculations);
+      await db.delete(analysisPoints);
+      await db.delete(contractors);
+      res.json({ message: "Database cleared successfully" });
+    } catch (error) {
+      console.error('Clear database error:', error);
+      res.status(500).json({ message: "Failed to clear database" });
+    }
+  });
+
+  const httpServer = createServer(app);
+  return httpServer;
+}
+
+function generateCSV(calculations: any[], options: any = {}): string {
+  const headers = ['Resource Name', 'Type'];
+  
+  if (options.includeDistances !== false) {
+    headers.push('Distance (miles)');
+  }
+  
+  if (options.includeTimes !== false) {
+    headers.push('Travel Time (minutes)');
+  }
+  
+  headers.push('Latitude', 'Longitude');
+  
+  const rows = calculations.map(calc => {
+    const row = [
+      calc.resource.name,
+      calc.resource.type,
+    ];
+    
+    if (options.includeDistances !== false) {
+      row.push(calc.distance.toFixed(2));
+    }
+    
+    if (options.includeTimes !== false) {
+      row.push(Math.round(calc.duration / 60).toString());
+    }
+    
+    row.push(calc.resource.latitude.toString(), calc.resource.longitude.toString());
+    
+    return row;
+  });
+  
+  return [headers, ...rows].map(row => row.join(',')).join('\n');
+}
+
+function formatDuration(seconds: number): string {
+  const minutes = Math.round(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  
+  if (hours > 0) {
+    return `${hours}h ${remainingMinutes}m`;
+  }
+  return `${minutes}m`;
+}

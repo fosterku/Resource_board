@@ -1,0 +1,352 @@
+import { 
+  resources, 
+  analysisPoints, 
+  distanceCalculations, 
+  analysisJobs,
+  contractors,
+  type Resource, 
+  type InsertResource,
+  type AnalysisPoint,
+  type InsertAnalysisPoint,
+  type DistanceCalculation,
+  type InsertDistanceCalculation,
+  type AnalysisJob,
+  type InsertAnalysisJob,
+  type Contractor,
+  type InsertContractor
+} from "@shared/schema";
+
+export interface IStorage {
+  // Resources
+  createResource(resource: InsertResource): Promise<Resource>;
+  getAllResources(): Promise<Resource[]>;
+  deleteAllResources(): Promise<void>;
+
+  // Contractors
+  createContractor(contractor: InsertContractor): Promise<Contractor>;
+  getAllContractors(): Promise<Contractor[]>;
+  getContractor(id: number): Promise<Contractor | undefined>;
+  updateContractor(id: number, updates: Partial<InsertContractor>): Promise<Contractor | undefined>;
+  deleteContractor(id: number): Promise<void>;
+
+  // Analysis Points
+  createAnalysisPoint(point: InsertAnalysisPoint): Promise<AnalysisPoint>;
+  getAllAnalysisPoints(): Promise<AnalysisPoint[]>;
+  deleteAnalysisPoint(id: number): Promise<void>;
+
+  // Distance Calculations
+  createDistanceCalculation(calculation: InsertDistanceCalculation): Promise<DistanceCalculation>;
+  getCalculationsByPointId(pointId: number): Promise<DistanceCalculation[]>;
+  getCalculationsWithResources(pointId: number): Promise<(DistanceCalculation & { resource: Resource })[]>;
+
+  clearCalculationsForPoint(pointId: number): Promise<void>;
+
+  // Analysis Jobs
+  createAnalysisJob(job: InsertAnalysisJob): Promise<AnalysisJob>;
+  updateAnalysisJob(id: number, updates: Partial<AnalysisJob>): Promise<AnalysisJob | undefined>;
+  getAnalysisJob(id: number): Promise<AnalysisJob | undefined>;
+}
+
+export class MemStorage implements IStorage {
+  private resources: Map<number, Resource> = new Map();
+  private contractors: Map<number, Contractor> = new Map();
+  private analysisPoints: Map<number, AnalysisPoint> = new Map();
+  private distanceCalculations: Map<number, DistanceCalculation> = new Map();
+  private analysisJobs: Map<number, AnalysisJob> = new Map();
+  private currentResourceId = 1;
+  private currentContractorId = 1;
+  private currentPointId = 1;
+  private currentCalculationId = 1;
+  private currentJobId = 1;
+
+  async createResource(insertResource: InsertResource): Promise<Resource> {
+    const id = this.currentResourceId++;
+    const resource: Resource = {
+      id,
+      name: insertResource.name,
+      type: insertResource.type,
+      latitude: insertResource.latitude,
+      longitude: insertResource.longitude,
+      description: insertResource.description || null,
+      properties: insertResource.properties || null,
+      createdAt: new Date(),
+    };
+    this.resources.set(id, resource);
+    return resource;
+  }
+
+  async getAllResources(): Promise<Resource[]> {
+    return Array.from(this.resources.values());
+  }
+
+  async deleteAllResources(): Promise<void> {
+    this.resources.clear();
+    this.currentResourceId = 1;
+  }
+
+  async createContractor(insertContractor: InsertContractor): Promise<Contractor> {
+    const id = this.currentContractorId++;
+    const contractor: Contractor = {
+      id,
+      name: insertContractor.name,
+      company: insertContractor.company,
+      email: insertContractor.email || null,
+      phone: insertContractor.phone || null,
+      category: insertContractor.category,
+      city: insertContractor.city || null,
+      state: insertContractor.state || null,
+      fullAddress: insertContractor.fullAddress || null,
+      latitude: insertContractor.latitude || null,
+      longitude: insertContractor.longitude || null,
+      birdRep: insertContractor.birdRep || null,
+      pipefile: insertContractor.pipefile || null,
+      avetta: insertContractor.avetta || null,
+      subRanking: insertContractor.subRanking || null,
+      fteCountsPerLocation: insertContractor.fteCountsPerLocation || null,
+      pipefileUpdates: insertContractor.pipefileUpdates || null,
+      notes: insertContractor.notes || null,
+      rating: insertContractor.rating || 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.contractors.set(id, contractor);
+    return contractor;
+  }
+
+  async getAllContractors(): Promise<Contractor[]> {
+    return Array.from(this.contractors.values());
+  }
+
+  async getContractor(id: number): Promise<Contractor | undefined> {
+    return this.contractors.get(id);
+  }
+
+  async updateContractor(id: number, updates: Partial<InsertContractor>): Promise<Contractor | undefined> {
+    const contractor = this.contractors.get(id);
+    if (!contractor) return undefined;
+    
+    const updated: Contractor = {
+      ...contractor,
+      ...updates,
+      updatedAt: new Date(),
+    };
+    this.contractors.set(id, updated);
+    return updated;
+  }
+
+  async deleteContractor(id: number): Promise<void> {
+    this.contractors.delete(id);
+  }
+
+  async createAnalysisPoint(insertPoint: InsertAnalysisPoint): Promise<AnalysisPoint> {
+    const id = this.currentPointId++;
+    const point: AnalysisPoint = {
+      ...insertPoint,
+      id,
+      createdAt: new Date(),
+    };
+    this.analysisPoints.set(id, point);
+    return point;
+  }
+
+  async getAllAnalysisPoints(): Promise<AnalysisPoint[]> {
+    return Array.from(this.analysisPoints.values());
+  }
+
+  async deleteAnalysisPoint(id: number): Promise<void> {
+    this.analysisPoints.delete(id);
+    // Also delete related calculations
+    const calcIds = Array.from(this.distanceCalculations.entries())
+      .filter(([, calc]) => calc.analysisPointId === id)
+      .map(([calcId]) => calcId);
+    
+    calcIds.forEach(calcId => this.distanceCalculations.delete(calcId));
+  }
+
+  async createDistanceCalculation(insertCalculation: InsertDistanceCalculation): Promise<DistanceCalculation> {
+    const id = this.currentCalculationId++;
+    const calculation: DistanceCalculation = {
+      id,
+      analysisPointId: insertCalculation.analysisPointId || null,
+      resourceId: insertCalculation.resourceId || null,
+      distance: insertCalculation.distance,
+      duration: insertCalculation.duration,
+      route: insertCalculation.route || null,
+      createdAt: new Date(),
+    };
+    this.distanceCalculations.set(id, calculation);
+    return calculation;
+  }
+
+  async getCalculationsByPointId(pointId: number): Promise<DistanceCalculation[]> {
+    return Array.from(this.distanceCalculations.values()).filter(
+      calc => calc.analysisPointId === pointId
+    );
+  }
+
+  async getCalculationsWithResources(pointId: number): Promise<(DistanceCalculation & { resource: Resource })[]> {
+    const calculations = await this.getCalculationsByPointId(pointId);
+    return calculations.map(calc => {
+      const resource = this.resources.get(calc.resourceId!);
+      return { ...calc, resource: resource! };
+    }).filter(calc => calc.resource);
+  }
+
+  async clearCalculationsForPoint(pointId: number): Promise<void> {
+    // Remove all calculations for this point
+    const idsToDelete: number[] = [];
+    this.distanceCalculations.forEach((calc, id) => {
+      if (calc.analysisPointId === pointId) {
+        idsToDelete.push(id);
+      }
+    });
+    idsToDelete.forEach(id => this.distanceCalculations.delete(id));
+  }
+
+  async createAnalysisJob(insertJob: InsertAnalysisJob): Promise<AnalysisJob> {
+    const id = this.currentJobId++;
+    const job: AnalysisJob = {
+      id,
+      filename: insertJob.filename,
+      status: insertJob.status,
+      resourceCount: insertJob.resourceCount || null,
+      error: insertJob.error || null,
+      createdAt: new Date(),
+    };
+    this.analysisJobs.set(id, job);
+    return job;
+  }
+
+  async updateAnalysisJob(id: number, updates: Partial<AnalysisJob>): Promise<AnalysisJob | undefined> {
+    const job = this.analysisJobs.get(id);
+    if (!job) return undefined;
+    
+    const updatedJob = { ...job, ...updates };
+    this.analysisJobs.set(id, updatedJob);
+    return updatedJob;
+  }
+
+  async getAnalysisJob(id: number): Promise<AnalysisJob | undefined> {
+    return this.analysisJobs.get(id);
+  }
+}
+
+// Database implementation
+import { db } from "./db";
+import { eq } from "drizzle-orm";
+
+export class DatabaseStorage implements IStorage {
+  async createResource(insertResource: InsertResource): Promise<Resource> {
+    const [resource] = await db.insert(resources).values(insertResource).returning();
+    return resource;
+  }
+
+  async getAllResources(): Promise<Resource[]> {
+    return await db.select().from(resources);
+  }
+
+  async deleteAllResources(): Promise<void> {
+    await db.delete(resources);
+  }
+
+  async createContractor(insertContractor: InsertContractor): Promise<Contractor> {
+    const [contractor] = await db.insert(contractors).values({
+      ...insertContractor,
+      updatedAt: new Date()
+    }).returning();
+    return contractor;
+  }
+
+  async getAllContractors(): Promise<Contractor[]> {
+    return await db.select().from(contractors);
+  }
+
+  async getContractor(id: number): Promise<Contractor | undefined> {
+    const [contractor] = await db.select().from(contractors).where(eq(contractors.id, id));
+    return contractor;
+  }
+
+  async updateContractor(id: number, updates: Partial<InsertContractor>): Promise<Contractor | undefined> {
+    const [contractor] = await db.update(contractors)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(contractors.id, id))
+      .returning();
+    return contractor;
+  }
+
+  async deleteContractor(id: number): Promise<void> {
+    await db.delete(contractors).where(eq(contractors.id, id));
+  }
+
+  async createAnalysisPoint(insertPoint: InsertAnalysisPoint): Promise<AnalysisPoint> {
+    const [point] = await db.insert(analysisPoints).values(insertPoint).returning();
+    return point;
+  }
+
+  async getAllAnalysisPoints(): Promise<AnalysisPoint[]> {
+    return await db.select().from(analysisPoints);
+  }
+
+  async deleteAnalysisPoint(id: number): Promise<void> {
+    // First delete related distance calculations
+    await db.delete(distanceCalculations).where(eq(distanceCalculations.analysisPointId, id));
+    // Then delete the analysis point
+    await db.delete(analysisPoints).where(eq(analysisPoints.id, id));
+  }
+
+  async createDistanceCalculation(insertCalculation: InsertDistanceCalculation): Promise<DistanceCalculation> {
+    const [calculation] = await db.insert(distanceCalculations).values(insertCalculation).returning();
+    return calculation;
+  }
+
+  async getCalculationsByPointId(pointId: number): Promise<DistanceCalculation[]> {
+    return await db.select().from(distanceCalculations).where(eq(distanceCalculations.analysisPointId, pointId));
+  }
+
+  async getCalculationsWithResources(pointId: number): Promise<(DistanceCalculation & { resource: Resource })[]> {
+    const calculations = await db.select({
+      id: distanceCalculations.id,
+      analysisPointId: distanceCalculations.analysisPointId,
+      resourceId: distanceCalculations.resourceId,
+      distance: distanceCalculations.distance,
+      duration: distanceCalculations.duration,
+      route: distanceCalculations.route,
+      createdAt: distanceCalculations.createdAt,
+      resource: resources
+    })
+    .from(distanceCalculations)
+    .innerJoin(resources, eq(distanceCalculations.resourceId, resources.id))
+    .where(eq(distanceCalculations.analysisPointId, pointId));
+
+    return calculations.map(calc => ({
+      ...calc,
+      resource: calc.resource
+    }));
+  }
+
+
+
+  async clearCalculationsForPoint(pointId: number): Promise<void> {
+    await db.delete(distanceCalculations).where(eq(distanceCalculations.analysisPointId, pointId));
+  }
+
+  async createAnalysisJob(insertJob: InsertAnalysisJob): Promise<AnalysisJob> {
+    const [job] = await db.insert(analysisJobs).values(insertJob).returning();
+    return job;
+  }
+
+  async updateAnalysisJob(id: number, updates: Partial<AnalysisJob>): Promise<AnalysisJob | undefined> {
+    const [job] = await db.update(analysisJobs)
+      .set(updates)
+      .where(eq(analysisJobs.id, id))
+      .returning();
+    return job;
+  }
+
+  async getAnalysisJob(id: number): Promise<AnalysisJob | undefined> {
+    const [job] = await db.select().from(analysisJobs).where(eq(analysisJobs.id, id));
+    return job;
+  }
+}
+
+export const storage = new DatabaseStorage();

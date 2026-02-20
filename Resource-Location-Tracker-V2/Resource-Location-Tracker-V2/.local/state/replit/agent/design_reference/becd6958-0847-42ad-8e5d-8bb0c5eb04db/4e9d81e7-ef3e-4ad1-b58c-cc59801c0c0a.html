@@ -1,0 +1,431 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Distance Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- @COMPONENT: AppHeader -->
+    <header class="bg-white shadow-sm border-b border-gray-200 px-4 py-3">
+        <div class="flex items-center justify-between max-w-7xl mx-auto">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-map-marked-alt text-white text-sm"></i>
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Resource Distance Calculator</h1>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                    <i class="fas fa-download mr-2"></i>Export Results
+                </button>
+                <button class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors">
+                    <i class="fas fa-plus mr-2"></i>New Analysis
+                </button>
+            </div>
+        </div>
+    </header>
+    <!-- @END_COMPONENT: AppHeader -->
+
+    <div class="flex h-screen pt-16">
+        <!-- @COMPONENT: Sidebar -->
+        <div class="w-80 bg-white shadow-lg border-r border-gray-200 flex flex-col">
+            <!-- File Upload Section -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="font-medium text-gray-900 mb-3">Upload Resources</h3>
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-primary-400 transition-colors cursor-pointer" data-implementation="KMZ file upload handler">
+                    <div class="text-center">
+                        <i class="fas fa-cloud-upload-alt text-2xl text-gray-400 mb-2"></i>
+                        <p class="text-sm text-gray-600">Drop KMZ file here or click to browse</p>
+                        <p class="text-xs text-gray-500 mt-1">Supports .kmz and .kml files</p>
+                    </div>
+                    <input type="file" class="hidden" accept=".kmz,.kml" data-mock="true">
+                </div>
+                
+                <!-- @STATE: uploadedFile:File|null = null -->
+                <div class="mt-3 p-3 bg-emerald-50 border border-emerald-200 rounded-lg" data-mock="true">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-file-archive text-emerald-600"></i>
+                            <span class="text-sm font-medium text-emerald-800" data-bind="uploadedFile.name">pipefile_16May2025.kmz</span>
+                        </div>
+                        <span class="text-xs text-emerald-600" data-bind="resources.length">47 resources</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Controls -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="font-medium text-gray-900 mb-3">Analysis Points</h3>
+                <button class="w-full mb-3 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors" data-event="click:startPointSelection">
+                    <i class="fas fa-crosshairs mr-2"></i>Select Point on Map
+                </button>
+                
+                <!-- @MAP: selectedPoints.map(point => ( -->
+                <div class="mb-2 p-3 bg-blue-50 border border-blue-200 rounded-lg" data-mock="true">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-sm font-medium text-blue-900" data-bind="point.label">Point A</div>
+                            <div class="text-xs text-blue-600" data-bind="point.coordinates">40.7128, -74.0060</div>
+                        </div>
+                        <button class="text-blue-600 hover:text-blue-800" data-event="click:removePoint">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- @END_MAP )) -->
+
+                <div class="mb-2 p-3 bg-blue-50 border border-blue-200 rounded-lg" data-mock="true">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-sm font-medium text-blue-900">Point B</div>
+                            <div class="text-xs text-blue-600">40.7580, -73.9855</div>
+                        </div>
+                        <button class="text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="flex-1 p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-medium text-gray-900">Closest Resources</h3>
+                    <select class="text-sm border-gray-300 rounded-md" data-event="change:updateSorting">
+                        <option value="distance">Sort by Distance</option>
+                        <option value="time">Sort by Time</option>
+                        <option value="name">Sort by Name</option>
+                    </select>
+                </div>
+
+                <div class="space-y-2 overflow-y-auto max-h-96">
+                    <!-- @MAP: sortedResources.map(resource => ( -->
+                    <div class="p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-colors cursor-pointer" data-mock="true" data-event="click:selectResource">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 text-sm" data-bind="resource.name">Resource Alpha-7</div>
+                                <div class="text-xs text-gray-600" data-bind="resource.type">Mobile Unit</div>
+                                <div class="flex items-center space-x-3 mt-1">
+                                    <span class="text-xs text-emerald-600 font-medium" data-bind="resource.distance">2.3 mi</span>
+                                    <span class="text-xs text-blue-600" data-bind="resource.travelTime">8 min</span>
+                                </div>
+                            </div>
+                            <div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                        </div>
+                    </div>
+                    <!-- @END_MAP )) -->
+
+                    <div class="p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-colors cursor-pointer" data-mock="true">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 text-sm">Resource Beta-12</div>
+                                <div class="text-xs text-gray-600">Fixed Location</div>
+                                <div class="flex items-center space-x-3 mt-1">
+                                    <span class="text-xs text-emerald-600 font-medium">3.1 mi</span>
+                                    <span class="text-xs text-blue-600">12 min</span>
+                                </div>
+                            </div>
+                            <div class="w-3 h-3 bg-amber-500 rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-colors cursor-pointer" data-mock="true">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 text-sm">Resource Gamma-5</div>
+                                <div class="text-xs text-gray-600">Service Vehicle</div>
+                                <div class="flex items-center space-x-3 mt-1">
+                                    <span class="text-xs text-emerald-600 font-medium">4.7 mi</span>
+                                    <span class="text-xs text-blue-600">18 min</span>
+                                </div>
+                            </div>
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-colors cursor-pointer" data-mock="true">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 text-sm">Resource Delta-19</div>
+                                <div class="text-xs text-gray-600">Emergency Unit</div>
+                                <div class="flex items-center space-x-3 mt-1">
+                                    <span class="text-xs text-emerald-600 font-medium">6.2 mi</span>
+                                    <span class="text-xs text-blue-600">24 min</span>
+                                </div>
+                            </div>
+                            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-colors cursor-pointer" data-mock="true">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 text-sm">Resource Echo-3</div>
+                                <div class="text-xs text-gray-600">Support Station</div>
+                                <div class="flex items-center space-x-3 mt-1">
+                                    <span class="text-xs text-emerald-600 font-medium">8.9 mi</span>
+                                    <span class="text-xs text-blue-600">32 min</span>
+                                </div>
+                            </div>
+                            <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Stats -->
+                <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                    <div class="text-sm font-medium text-blue-900 mb-2">Analysis Summary</div>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                            <span class="text-blue-600">Closest:</span>
+                            <span class="font-medium text-blue-900" data-bind="summary.closest">2.3 mi</span>
+                        </div>
+                        <div>
+                            <span class="text-blue-600">Avg Distance:</span>
+                            <span class="font-medium text-blue-900" data-bind="summary.average">5.1 mi</span>
+                        </div>
+                        <div>
+                            <span class="text-blue-600">Total Resources:</span>
+                            <span class="font-medium text-blue-900" data-bind="summary.total">47</span>
+                        </div>
+                        <div>
+                            <span class="text-blue-600">Within 10 mi:</span>
+                            <span class="font-medium text-blue-900" data-bind="summary.within10mi">42</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: Sidebar -->
+
+        <!-- @COMPONENT: MapContainer -->
+        <div class="flex-1 relative">
+            <!-- Map Loading Overlay -->
+            <div class="absolute inset-0 bg-gray-100 flex items-center justify-center z-10 hidden" id="mapLoader">
+                <div class="text-center">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500 mx-auto mb-3"></div>
+                    <p class="text-gray-600">Loading map and calculating distances...</p>
+                </div>
+            </div>
+
+            <!-- Map Toolbar -->
+            <div class="absolute top-4 right-4 z-20 bg-white rounded-lg shadow-lg border border-gray-200 p-2">
+                <div class="flex flex-col space-y-2">
+                    <button class="p-2 text-gray-600 hover:text-primary-500 hover:bg-gray-50 rounded transition-colors" title="Zoom In" data-event="click:zoomIn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="p-2 text-gray-600 hover:text-primary-500 hover:bg-gray-50 rounded transition-colors" title="Zoom Out" data-event="click:zoomOut">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <div class="border-t border-gray-200 my-1"></div>
+                    <button class="p-2 text-gray-600 hover:text-primary-500 hover:bg-gray-50 rounded transition-colors" title="Center Map" data-event="click:centerMap">
+                        <i class="fas fa-crosshairs"></i>
+                    </button>
+                    <button class="p-2 text-gray-600 hover:text-primary-500 hover:bg-gray-50 rounded transition-colors" title="Toggle Layers" data-event="click:toggleLayers">
+                        <i class="fas fa-layer-group"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Map Status Bar -->
+            <div class="absolute bottom-4 left-4 z-20 bg-white rounded-lg shadow-lg border border-gray-200 px-3 py-2">
+                <div class="flex items-center space-x-4 text-xs text-gray-600">
+                    <span data-bind="mapStatus.coordinates">40.7128°N, 74.0060°W</span>
+                    <span class="text-gray-400">|</span>
+                    <span data-bind="mapStatus.zoom">Zoom: 12</span>
+                    <span class="text-gray-400">|</span>
+                    <span data-bind="mapStatus.resourcesVisible">47 resources visible</span>
+                </div>
+            </div>
+
+            <!-- Map Legend -->
+            <div class="absolute bottom-4 right-4 z-20 bg-white rounded-lg shadow-lg border border-gray-200 p-3">
+                <div class="text-xs font-medium text-gray-900 mb-2">Legend</div>
+                <div class="space-y-1 text-xs">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        <span class="text-gray-600">Selected Point</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                        <span class="text-gray-600">≤ 5 miles</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-amber-500 rounded-full"></div>
+                        <span class="text-gray-600">5-10 miles</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <span class="text-gray-600">> 10 miles</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- @FUNCTIONALITY: Interactive map using Leaflet with KMZ data overlay and routing calculations -->
+            <div id="map" class="w-full h-full" data-implementation="Leaflet map with routing service integration"></div>
+        </div>
+        <!-- @END_COMPONENT: MapContainer -->
+    </div>
+
+    <!-- @COMPONENT: ExportModal -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="exportModal">
+        <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-900">Export Results</h3>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Export Format</label>
+                        <select class="w-full border-gray-300 rounded-md">
+                            <option value="pdf">PDF Report</option>
+                            <option value="csv">CSV Data</option>
+                            <option value="excel">Excel Spreadsheet</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Include</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300" checked>
+                                <span class="ml-2 text-sm text-gray-700">Distance calculations</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300" checked>
+                                <span class="ml-2 text-sm text-gray-700">Travel time estimates</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300">
+                                <span class="ml-2 text-sm text-gray-700">Map screenshot</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+                <button class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors" data-event="click:closeExportModal">
+                    Cancel
+                </button>
+                <button class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors" data-event="click:generateExport">
+                    <i class="fas fa-download mr-2"></i>Export
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: ExportModal -->
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        (function() {
+            // TODO: Implement KMZ parsing, routing calculations, and state management
+            
+            // Initialize map
+            const map = L.map('map').setView([40.7128, -74.0060], 10);
+            
+            // Add tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Mock data for demonstration
+            const mockResources = [
+                {id: 1, name: 'Resource Alpha-7', lat: 40.7505, lng: -73.9934, type: 'Mobile Unit'},
+                {id: 2, name: 'Resource Beta-12', lat: 40.7282, lng: -74.0776, type: 'Fixed Location'},
+                {id: 3, name: 'Resource Gamma-5', lat: 40.6892, lng: -74.0445, type: 'Service Vehicle'},
+                {id: 4, name: 'Resource Delta-19', lat: 40.7829, lng: -73.9654, type: 'Emergency Unit'},
+                {id: 5, name: 'Resource Echo-3', lat: 40.6782, lng: -73.9442, type: 'Support Station'}
+            ];
+
+            // Add mock resource markers
+            mockResources.forEach(resource => {
+                const marker = L.circleMarker([resource.lat, resource.lng], {
+                    radius: 8,
+                    fillColor: getMarkerColor(resource.id),
+                    color: '#ffffff',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).addTo(map);
+
+                marker.bindPopup(`
+                    <div class="p-2">
+                        <div class="font-medium">${resource.name}</div>
+                        <div class="text-sm text-gray-600">${resource.type}</div>
+                    </div>
+                `);
+            });
+
+            function getMarkerColor(id) {
+                const colors = ['#10B981', '#F59E0B', '#EF4444', '#3B82F6', '#8B5CF6'];
+                return colors[id % colors.length];
+            }
+
+            // Mock selected points
+            const selectedPoints = [
+                {lat: 40.7128, lng: -74.0060, label: 'Point A'},
+                {lat: 40.7580, lng: -73.9855, label: 'Point B'}
+            ];
+
+            selectedPoints.forEach(point => {
+                L.circleMarker([point.lat, point.lng], {
+                    radius: 12,
+                    fillColor: '#3B82F6',
+                    color: '#ffffff',
+                    weight: 3,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map).bindPopup(`
+                    <div class="p-2">
+                        <div class="font-medium">${point.label}</div>
+                        <div class="text-sm text-gray-600">Analysis Point</div>
+                    </div>
+                `);
+            });
+
+            // Handle map clicks for point selection
+            map.on('click', function(e) {
+                // TODO: Add logic to create new analysis points
+                console.log('Map clicked at:', e.latlng);
+            });
+
+            // Update coordinates display on mouse move
+            map.on('mousemove', function(e) {
+                const coords = `${e.latlng.lat.toFixed(4)}°N, ${Math.abs(e.latlng.lng).toFixed(4)}°${e.latlng.lng >= 0 ? 'E' : 'W'}`;
+                document.querySelector('[data-bind="mapStatus.coordinates"]').textContent = coords;
+            });
+
+            // Update zoom level display
+            map.on('zoomend', function() {
+                document.querySelector('[data-bind="mapStatus.zoom"]').textContent = `Zoom: ${map.getZoom()}`;
+            });
+
+        })();
+    </script>
+</body>
+</html>

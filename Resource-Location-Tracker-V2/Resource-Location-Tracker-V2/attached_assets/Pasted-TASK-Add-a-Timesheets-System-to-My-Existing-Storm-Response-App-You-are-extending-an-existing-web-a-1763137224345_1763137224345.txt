@@ -1,0 +1,389 @@
+TASK: Add a Timesheets System to My Existing Storm Response App
+
+You are extending an existing web app that already has:
+
+Contractor records (companies, contacts, email, etc.)
+
+A contractor login system
+
+Rosters / crews (personnel + equipment) already defined for each contractor
+
+Session / event concept for storm responses
+
+Replit database storage with an existing schema that you already designed
+
+Do not redesign the whole stack or database. Instead, add what’s needed for Timesheets and integrate with what already exists.
+
+1. Overall Goal
+
+I need a Timesheets system where:
+
+Each contractor can submit one timesheet per crew per day.
+
+Sometimes there are 15+ contractors and hundreds of crews, so the workflow must be fast and easy for contractors and easy to monitor for managers.
+
+Managers must be able to see who has / hasn’t submitted timesheets for each day and session.
+
+Managers must be able to review and approve timesheets.
+
+There must be export to PDF (and CSV) for each contractor’s timesheets so I can print them and have them signed.
+
+The Timesheet fields must match the attached Excel timesheet layout (roster/timesheet CSVs I will provide), including:
+
+Header info (project name, utility, job location, foreman/GF, lodging info, etc.)
+
+Per-person rows (name, classification, segments of work with times and codes, meals, etc.)
+
+Per-equipment rows (description, number, hours, etc.)
+
+Totals and signature blocks.
+
+Assume you can read the structure of my attached Timesheet spreadsheet and Roster spreadsheet; use those as the source of truth for what fields to collect and store.
+
+2. Data / Storage Requirements (Conceptual)
+
+Do not hard-code database technology. Just add the minimal logical entities on top of my existing ones.
+
+We already have:
+
+Contractors / companies
+
+Crews with personnel and equipment (from Rosters)
+
+Sessions/events
+
+You need to introduce Timesheet entities conceptually like this (adapt to the current schema):
+
+Timesheet (header)
+
+Linked to: session, contractor/company, crew, and date.
+
+Contains all header fields from the Excel template:
+
+Project/Job name
+
+Utility name
+
+General Foreman / Team GF
+
+Crew Foreman
+
+Job location(s)
+
+Lodging info (yes/no or description)
+
+Any other header fields from the sheet
+
+Has a status field: DRAFT, SUBMITTED, APPROVED, SIGNED.
+
+Tracks who submitted, who approved, and who signed (if applicable).
+
+Optionally stores a link/reference to the original uploaded Excel/PDF for that timesheet.
+
+Timesheet Personnel Rows
+
+One row per employee per day, matching the spreadsheet.
+
+Linked back to the Timesheet header and (if possible) to the roster’s person record.
+
+Fields:
+
+Employee name
+
+Classification (all codes/labels from the sheet)
+
+Work segments for that day. The sheet has multiple segments/columns; model them as:
+
+An array/list of segments with:
+
+Activity type (e.g., Working / Mobilized / Standby / Demobilized, using the same codes as the sheet)
+
+Start time and end time
+
+Ticket number where required (e.g., for Working)
+
+Total hours for the day (either stored or computed)
+
+Meal / per diem fields exactly as in the sheet (e.g., meals provided by utility, meals claimed, etc.).
+
+Timesheet Equipment Rows
+
+One row per piece of equipment per day, matching the spreadsheet:
+
+Equipment description
+
+Equipment number
+
+Start time, end time, and total hours
+
+Any other fields from the sheet for equipment.
+
+You do not need to change existing roster storage; just reference it where helpful.
+
+3. Contractor Flow (Timesheet Entry)
+
+Create a Contractor Timesheets section under the contractor login.
+
+Contractor Timesheets Page
+
+Contractor can:
+
+Select Session (storm event).
+
+Select Crew (from their existing roster).
+
+Select Date.
+
+When a crew and date are selected:
+
+If a timesheet already exists → load it for editing (if still in DRAFT).
+
+If not → create a new Timesheet in DRAFT.
+
+Contractor Timesheet Form
+
+Layout should broadly mirror the spreadsheet:
+
+Header section – all top-of-sheet fields (project, utility, job location, foreman, lodging, etc.).
+
+Personnel table – rows for each person on that crew:
+
+Pre-populate from the approved roster for that crew.
+
+Allow adding/removing people (within what makes sense).
+
+For each person:
+
+Show classification (editable if needed).
+
+Allow them to enter work segments:
+
+Activity code
+
+Start time
+
+End time
+
+Ticket # if required
+
+Auto-calculate daily total hours.
+
+Allow entering meals/per diem fields from the sheet.
+
+Provide bulk helpers:
+
+“Copy yesterday’s timesheet for this crew” for the same contractor/session.
+
+“Apply this time segment to all selected employees”.
+
+Equipment table – similar to the sheet:
+
+Rows for equipment used by that crew.
+
+For each:
+
+Description, equipment number, start time, end time, daily hours.
+
+Allow adding/removing rows easily.
+
+Buttons/actions:
+
+Save Draft – saves but does not submit.
+
+Submit Timesheet – changes status to SUBMITTED.
+
+Timesheet becomes read-only for contractor once APPROVED or SIGNED.
+
+Validation on the client (and server):
+
+No overlapping time segments for the same person.
+
+Required fields from the sheet must be filled (e.g., crew foreman, date, etc.).
+
+Reasonable limit on total hours per person per day (e.g., 0–24).
+
+Ticket number required where the sheet indicates (e.g., when activity is “Work”).
+
+4. Manager Flow (Monitoring & Approval)
+
+Create a Timesheet Management section for managers.
+
+Submission Overview (“Radar”)
+
+View: Session + Date.
+
+Show a list/table of all contractors in that session with status for that date:
+
+Missing (no timesheets submitted for that contractor on that date)
+
+Partial (some crews submitted, some missing)
+
+Complete (all expected crews have submitted)
+
+Allow clicking into a contractor to see:
+
+Each crew
+
+Whether that crew has a timesheet for that date
+
+Quick link to view/approve each one
+
+This makes it easy to see who has / hasn’t submitted timesheets each day.
+
+Reviewing and Approving
+
+For each timesheet:
+
+Manager can open it in a view that mirrors the contractor form but is read-only by default.
+
+Manager can:
+
+Add comments/notes (e.g., “fix ticket # on employee X”).
+
+Change status:
+
+DRAFT → SUBMITTED (if needed)
+
+SUBMITTED → APPROVED
+
+Once approved:
+
+The data should be treated as locked for billing/audit, unless there is an explicit correction flow that creates a new version.
+
+Every approve action should be logged (who, when).
+
+5. Export and Signature Workflow
+
+I need to be able to print and sign timesheets.
+
+Per Timesheet Export
+
+For each individual timesheet, provide:
+
+Export as PDF:
+
+Layout should follow the same structure as the spreadsheet:
+
+Header block
+
+Personnel table
+
+Equipment table
+
+Totals as in the sheet
+
+Signature lines (Contractor, Manager, Utility)
+
+This does not have to look identical pixel-perfect, but must clearly show all the same fields so it can be printed, reviewed, and signed.
+
+Export as CSV (and optionally XLSX):
+
+One CSV per timesheet with:
+
+Timesheet header info
+
+Personnel rows (with their segments and totals)
+
+Equipment rows
+
+Batch Exports
+
+On the manager side, for a given Session + Date:
+
+Allow exporting:
+
+All timesheets for a specific contractor on that date (one PDF file per timesheet, or a combined PDF).
+
+All timesheets for all contractors on that date (for printing and signing).
+
+Mark in the system when a PDF has been generated/downloaded for audit purposes (optional but helpful).
+
+Signature Tracking (Basic)
+
+For now, signatures can be handled physically on paper after printing.
+
+Later, I may upload signed PDFs back into the system, so:
+
+Reserve a field / property on eachTimesheet to store a reference/link to a scanned signed PDF.
+
+6. Permissions and Roles
+
+Use the existing auth but enforce these rules:
+
+Contractor users:
+
+Can only see and edit their own timesheets.
+
+Can create/edit timesheets only for their own crews and only for the contractors they belong to.
+
+Can edit while DRAFT. Once SUBMITTED, they may only edit if a manager has not approved yet (this behavior can be configurable).
+
+Cannot approve their own timesheets.
+
+Manager users:
+
+Can see all contractors and all timesheets for a session.
+
+Can approve timesheets.
+
+Can export PDFs and CSVs for any contractor.
+
+Utility users (if already implemented in the main spec):
+
+Can view timesheets (read-only).
+
+In the future, may sign or acknowledge timesheets, but this is not required right now for the initial build.
+
+7. Performance / Usability Notes
+
+This system must be usable with hundreds of crews and many contractors, so:
+
+Timesheet tables should be efficient for 50–100 rows without becoming slow.
+
+Provide shortcuts to:
+
+Copy yesterday’s timesheet for the same crew.
+
+Apply a single time segment across multiple selected employees.
+
+Make lists paginated or virtualized if needed for performance.
+
+8. What You Should Implement
+
+Backend routes / handlers (using whatever framework and DB/schema already exist in this project) for:
+
+Creating, loading, updating, and submitting timesheets.
+
+Listing timesheets by session/date/contractor.
+
+Manager approval endpoint.
+
+Export endpoints to generate PDF and CSV for a given timesheet.
+
+A summary endpoint that, given session + date, returns:
+
+Contractors with Missing / Partial / Complete status.
+
+Frontend UI:
+
+Contractor Timesheets page:
+
+List of crews and dates.
+
+Timesheet editor form (matching spreadsheet fields).
+
+Manager Timesheet overview (submission radar):
+
+Status grid by contractor for a selected session/date.
+
+Drill-down to view/approve individual timesheets.
+
+Export buttons in manager view and possibly contractor view.
+
+Validation and status logic:
+
+Basic rules described above (no overlaps, required fields, reasonable total hours).
+
+Proper state transitions: DRAFT → SUBMITTED → APPROVED → SIGNED.
+
+Use my attached Timesheet spreadsheet and Roster CSV to derive the exact field names and structures, and implement this in a way that fits into my existing Replit project and database.
