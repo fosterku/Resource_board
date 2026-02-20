@@ -1,0 +1,8 @@
+
+Name,Company,Category,Latitude,Longitude,Email,Phone,City,State,Address,Pipefile,AVETTA,Bird Rep,Sub Ranking,FTE Counts Per Location,Pipefile Updates,Notes
+John Smith,ABC Electric Company,Union,40.7128,-74.0060,john.smith@abcelectric.com,(555) 123-4567,New York,NY,123 Main Street New York NY 10001,Completed,Yes,Jane Doe,A-Rating,25 FTE NYC Location,Updated Q4 2024,Experienced electrical contractor with 20+ years
+Sarah Johnson,Metro HVAC Services,HVAC,34.0522,-118.2437,sarah@metrohvac.com,(555) 234-5678,Los Angeles,CA,456 Industrial Blvd Los Angeles CA 90001,Unfinished,No,Mike Wilson,B-Rating,15 FTE LA Location,Pending review,Specializes in commercial HVAC systems
+Bob Martinez,Green Tree Services,Veg,39.7392,-104.9903,bob@greentree.com,(555) 345-6789,Denver,CO,789 Vegetation Way Denver CO 80202,N/A,Yes,Lisa Chen,A-Rating,30 FTE Denver Metro,Current,Tree trimming and vegetation management
+Tom Wilson,DataCom Solutions,DAT,41.8781,-87.6298,tom@datacom.com,(555) 456-7890,Chicago,IL,321 Data Drive Chicago IL 60601,Completed,Yes,Robert Kim,A-Rating,12 FTE Chicago Office,Updated Jan 2025,Telecommunications and data services
+Lisa Brown,Power Consulting Group,Consulting,33.4484,-112.0740,lisa@powerconsult.com,(555) 567-8901,Phoenix,AZ,654 Consulting Circle Phoenix AZ 85001,Completed,N/A,David Park,A-Rating,8 FTE Phoenix Location,Current,Engineering consulting services
+Mike Davis,Valley Electric,Non-Union,37.7749,-122.4194,mike@valleyelectric.com,(555) 678-9012,San Francisco,CA,987 Electric Avenue San Francisco CA 94102,Unfinished,No,Jennifer Lee,B-Rating,20 FTE Bay Area,In progress,Non-union electrical contractor
